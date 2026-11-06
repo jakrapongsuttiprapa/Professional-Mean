@@ -112,7 +112,10 @@ footer.by{text-align:center;color:var(--dim);font-size:13px;margin-top:26px}
 .splash-photo{width:150px;height:150px;border-radius:50%;margin:0 auto 22px;position:relative}
 .splash-photo{animation:pulse 2.6s ease-in-out infinite}
 .splash-photo .ph{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,.85);background:#dfe3ea}
-.splash-photo img{width:100%;height:100%;object-fit:cover;transform:scale(2.5);transform-origin:52% 53%}
+.splash-photo .ph::before{content:"📘";position:absolute;inset:0;display:grid;place-items:center;font-size:54px;background:radial-gradient(circle at 35% 30%,#fff,#cfe9ff 45%,#9fb2ff)}
+.splash-photo img{position:relative;width:100%;height:100%;object-fit:cover;transform:scale(2.5);transform-origin:52% 53%;opacity:0;transition:opacity .6s}
+.splash-photo.custom img{transform:scale(1.35);transform-origin:50% 42%}
+.splash-photo.ready img{opacity:1}
 .splash-photo .halo{border-radius:50%;inset:-10px}
 
 /* ---------- hero / login ---------- */
@@ -1156,19 +1159,27 @@ async function boot() {
 /* ---------------- hero photo (embedded once, reused) ---------------- */
 const HERO_DEFAULT = $('#heroImg').src;
 let heroApplied = null;
-function setHeroSrc(src) { $('#heroImg').src = src; $('#splashImg').src = src; $('#hhPhoto').style.backgroundImage = 'url("' + String(src).replace(/"/g, '%22') + '")'; }
+function setHeroSrc(src) {
+  $('#heroImg').src = src; $('#splashImg').src = src;
+  $('#hhPhoto').style.backgroundImage = 'url("' + String(src).replace(/"/g, '%22') + '")';
+  const sp = document.querySelector('.splash-photo');
+  sp.classList.toggle('custom', src !== HERO_DEFAULT);
+  sp.classList.add('ready');
+}
 // ใช้ลิงก์รูปจากการตั้งค่า ถ้าโหลดไม่ได้จะกลับไปใช้รูปเดิมอัตโนมัติ
 function applyHero(url) {
   url = url || '';
   if (url === heroApplied) return;
   heroApplied = url;
+  lsSet('rcp_hero', url); // จำรูปล่าสุดไว้ หน้าโหลดครั้งถัดไปจะแสดงรูปเดียวกับหน้าหลักทันที
   if (!url) { setHeroSrc(HERO_DEFAULT); return; }
   const im = new Image();
   im.onload = () => { if (heroApplied === url) setHeroSrc(url); };
   im.onerror = () => { if (heroApplied === url) setHeroSrc(HERO_DEFAULT); };
   im.src = url;
 }
-setHeroSrc(HERO_DEFAULT);
+// ถ้าเคยเปิดเว็บแล้ว ใช้รูปที่จำไว้ทันที — ถ้ายังไม่เคย หน้าโหลดจะรอรูปจากการตั้งค่าก่อน (ไม่โชว์รูปเก่าแวบ)
+(function () { const c = lsGet('rcp_hero'); if (c !== null) applyHero(c); else if (!CONFIG.GAS_URL) applyHero(''); })();
 
 /* ---------------- photo tilt ---------------- */
 (function () {
