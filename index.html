@@ -924,7 +924,7 @@ function rcHandle(action, p, ctx) {
 const QMAP = {}; QUESTIONS.forEach(q => QMAP[q.id] = q);
 const DIFF_TH = { E: 'ง่าย', M: 'ปานกลาง', H: 'ยาก' };
 const DEMO_ROSTER = [];
-['6/1', '6/2', '6/3'].forEach(c => { for (let i = 1; i <= 3; i++) DEMO_ROSTER.push({ cls: c, no: i, first: 'นักเรียนทดลอง' + i, last: 'ห้อง ' + c }); });
+['6/1', '6/2', '6/3'].forEach(c => { for (let i = 1; i <= 3; i++) DEMO_ROSTER.push({ cls: c, no: i, first: 'นายทดลอง' + i + ' ห้อง ' + c, last: '' }); });
 
 /* ---------------- helpers ---------------- */
 const $ = s => document.querySelector(s);
@@ -934,7 +934,8 @@ function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return n
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
 function lsDel(k) { try { localStorage.removeItem(k); } catch (e) { } }
 function thTime(t) { try { return new Date(t).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok', dateStyle: 'medium', timeStyle: 'short' }); } catch (e) { return new Date(t).toLocaleString(); } }
-function initial(n) { return (String(n || '?').trim()[0] || '?'); }
+function fullName(o) { return (String(o.first || '') + ' ' + String(o.last || '')).replace(/\s+/g, ' ').trim(); }
+function initial(n) { const t = String(n || '').trim().replace(/^(เด็กชาย|เด็กหญิง|นางสาว|นาย|นาง|ด\.ช\.|ด\.ญ\.|น\.ส\.)\s*/, ''); return t[0] || '?'; }
 function clsLabel(c) { return 'ม.' + c; }
 
 function toast(msg, type) {
@@ -1134,7 +1135,10 @@ async function boot() {
   $('#splashTitle').innerHTML = words.map((w, i) => '<span class="w" style="animation-delay:' + (i * 0.12) + 's">' + esc(w) + '</span>').join(' ');
   const t0 = Date.now();
   const isAdmin = /[?&]admin=1/.test(location.search);
+  $('#splashMsg').textContent = 'กำลังเชื่อมต่อฐานข้อมูล…';
+  const slowT = setTimeout(() => { $('#splashMsg').textContent = 'กำลังโหลดรายชื่อนักเรียน… (ครั้งแรกอาจใช้เวลา 5–10 วินาที)'; }, 4000);
   let r = await api('roster', {}, { retries: 2 });
+  clearTimeout(slowT);
   while (!r.ok) {
     $('#splashMsg').textContent = 'เชื่อมต่อระบบไม่สำเร็จ';
     await modal({ icon: '📶', title: 'เชื่อมต่อไม่ได้', html: errText(r), buttons: [{ text: 'ลองใหม่', value: 1 }] });
@@ -1192,14 +1196,14 @@ function buildLogin() {
   if (st) {
     $('#resumeBox').classList.add('show');
     $('#resumeAv').textContent = initial(st.first);
-    $('#resumeName').textContent = st.first + ' ' + st.last + ' · ' + clsLabel(st.cls) + ' เลขที่ ' + st.no;
+    $('#resumeName').textContent = fullName(st) + ' · ' + clsLabel(st.cls) + ' เลขที่ ' + st.no;
     $('#resumeBtn').onclick = () => doLogin(last, false);
   } else $('#resumeBox').classList.remove('show');
 }
 function fillNames() {
   const sel = $('#nameSel');
   const list = S.roster.filter(s => s.cls === selCls);
-  sel.innerHTML = '<option value="">— เลือกชื่อ (' + list.length + ' คน) —</option>' + list.map(s => '<option value="' + esc(rcKey(s.cls, s.no)) + '">เลขที่ ' + s.no + '  ' + esc(s.first + ' ' + s.last) + '</option>').join('');
+  sel.innerHTML = '<option value="">— เลือกชื่อ (' + list.length + ' คน) —</option>' + list.map(s => '<option value="' + esc(rcKey(s.cls, s.no)) + '">เลขที่ ' + s.no + '  ' + esc(fullName(s)) + '</option>').join('');
   sel.disabled = false; $('#whoBox').classList.remove('show'); $('#loginBtn').disabled = true;
 }
 $('#nameSel').addEventListener('change', e => {
@@ -1208,7 +1212,7 @@ $('#nameSel').addEventListener('change', e => {
   $('#loginBtn').disabled = !st;
   if (!st) { $('#whoBox').classList.remove('show'); return; }
   $('#whoAv').textContent = initial(st.first);
-  $('#whoName').textContent = st.first + ' ' + st.last;
+  $('#whoName').textContent = fullName(st);
   $('#whoSub').textContent = clsLabel(st.cls) + ' · เลขที่ ' + st.no;
   $('#whoBox').classList.remove('show'); void $('#whoBox').offsetWidth; $('#whoBox').classList.add('show');
 });
@@ -1220,7 +1224,7 @@ async function doLogin(key, confirmFirst) {
   const st = S.roster.find(s => rcKey(s.cls, s.no) === key);
   if (!st) return;
   if (confirmFirst) {
-    const ok = await modal({ icon: '🪪', title: 'ยืนยันตัวตน', html: 'ฉันคือ <b>' + esc(st.first + ' ' + st.last) + '</b><br>' + clsLabel(st.cls) + ' เลขที่ ' + st.no + '<br><br><small class="muted">⚠️ เครื่องนี้จะถูกผูกกับชื่อนี้ทันที ถ้าไม่ใช่ชื่อของตัวเอง <b>ห้ามกดยืนยัน</b></small>', buttons: [{ text: 'ยกเลิก', value: false, cls: 'ghost' }, { text: 'ใช่ ฉันเอง ✅', value: true }] });
+    const ok = await modal({ icon: '🪪', title: 'ยืนยันตัวตน', html: 'ฉันคือ <b>' + esc(fullName(st)) + '</b><br>' + clsLabel(st.cls) + ' เลขที่ ' + st.no + '<br><br><small class="muted">⚠️ เครื่องนี้จะถูกผูกกับชื่อนี้ทันที ถ้าไม่ใช่ชื่อของตัวเอง <b>ห้ามกดยืนยัน</b></small>', buttons: [{ text: 'ยกเลิก', value: false, cls: 'ghost' }, { text: 'ใช่ ฉันเอง ✅', value: true }] });
     if (!ok) return;
   }
   loggingIn = true; busy(true, 'กำลังเข้าสู่ระบบ…');
@@ -1235,7 +1239,7 @@ async function doLogin(key, confirmFirst) {
 function renderHome() {
   const st = S.state, set = S.settings;
   $('#homeAv').textContent = initial(st.first);
-  $('#homeName').textContent = st.first + ' ' + st.last;
+  $('#homeName').textContent = fullName(st);
   $('#homeSub').textContent = clsLabel(st.cls) + ' · เลขที่ ' + st.no;
   const eb = $('#examBtn');
   const lim = set.timeLimitMin ? set.timeLimitMin + ' นาที' : 'ไม่จำกัดเวลา';
@@ -1495,7 +1499,7 @@ function showResult(o) {
   const code = o.kind === 'exam' ? st.code : (o.code || '');
   $('#capCard').innerHTML =
     '<div class="cap-head">' + (photo ? '<img alt="" src="' + photo + '">' : '<div class="avatar" style="width:74px;height:74px;font-size:30px">' + esc(initial(st.first)) + '</div>') +
-    '<div><small class="muted">Basic English Course · What Does "Professional" Mean?</small><div style="font-size:22px;font-weight:900">' + esc(st.first + ' ' + st.last) + '</div><span class="chip" style="margin-top:6px">' + esc(badge) + '</span></div></div>' +
+    '<div><small class="muted">Basic English Course · What Does "Professional" Mean?</small><div style="font-size:22px;font-weight:900">' + esc(fullName(st)) + '</div><span class="chip" style="margin-top:6px">' + esc(badge) + '</span></div></div>' +
     '<div class="cap-grid">' + rows.map(r => '<div><small>' + esc(r[0]) + '</small><b>' + esc(r[1]) + '</b></div>').join('') + '</div>' +
     '<div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="muted" style="font-size:13px">รหัสยืนยันผล (ครูใช้ตรวจสอบ)</span><b class="code" style="font-size:22px">' + esc(code || '—') + '</b></div>';
   const rb = $('#resRetakeBtn');
@@ -1530,7 +1534,7 @@ async function saveImage() {
     await new Promise(res => { const im = new Image(); im.onload = () => { x.save(); x.beginPath(); x.arc(540, 330, 110, 0, 6.283); x.clip(); x.drawImage(im, 430, 220, 220, 220); x.restore(); res(); }; im.onerror = res; im.src = photo; });
     x.strokeStyle = '#2ee6a6'; x.lineWidth = 8; x.beginPath(); x.arc(540, 330, 114, 0, 6.283); x.stroke();
   } else { x.fillStyle = '#7c5cff'; x.beginPath(); x.arc(540, 330, 110, 0, 6.283); x.fill(); x.fillStyle = '#fff'; x.font = F(900, 100); x.fillText(initial(st.first), 540, 365); }
-  x.fillStyle = '#fff'; x.font = F(900, 56); x.fillText(st.first + ' ' + st.last, 540, 520);
+  x.fillStyle = '#fff'; x.font = F(900, 56); x.fillText(fullName(st), 540, 520);
   x.fillStyle = '#a7b2da'; x.font = F(700, 34); x.fillText(clsLabel(st.cls) + '  ·  เลขที่ ' + st.no, 540, 572);
   let score, total, label, good;
   if (o.kind === 'exam') { score = st.score; total = st.total; good = st.passed; label = good ? 'ผ่าน ✔' : 'ยังไม่ผ่าน'; }
@@ -1792,7 +1796,7 @@ function renderAdmin() {
   const fc = $('#fCls').value, fs = $('#fSt').value, q = $('#fQ').value.trim().toLowerCase();
   const list = rows.filter(x => {
     if (fc && x.cls !== fc) return false;
-    if (q && (x.first + ' ' + x.last + ' ' + x.no).toLowerCase().indexOf(q) < 0) return false;
+    if (q && (fullName(x) + ' ' + x.no).toLowerCase().indexOf(q) < 0) return false;
     if (fs === 'none' && x.status !== 'none') return false;
     if (fs === 'prog' && x.status !== 'in_progress') return false;
     if (fs === 'done' && x.status !== 'done') return false;
@@ -1811,18 +1815,18 @@ function renderAdmin() {
       ? '<b style="color:' + (x.retakeComplete ? 'var(--em)' : 'var(--gold)') + '">' + Math.min(x.retakeDone, x.retakeRequired) + '/' + x.retakeRequired + '</b>' + (x.retakeComplete ? ' 🎉' : '') + '<br><small class="muted">ทำ ' + x.retakeAttempts + ' รอบ' + (x.retakeActive ? ' · กำลังทำ' : '') + (x.retakeScores.length ? ' · ล่าสุด ' + x.retakeScores[x.retakeScores.length - 1].s + '/' + x.retakeScores[x.retakeScores.length - 1].n : '') + '</small>'
       : '<span class="muted">—</span>';
     const vl = x.vlog.slice(-4).map(v => (VK[v.k] || v.k)).join(', ');
-    return '<tr class="' + (fresh.indexOf(x) >= 0 ? 'flash' : '') + '"><td>' + clsLabel(x.cls) + '</td><td>' + x.no + '</td><td><b>' + esc(x.first + ' ' + x.last) + '</b>' + (x.deviceBound ? '<br><small class="muted">📱 …' + esc(x.deviceShort) + '</small>' : '') + '</td><td>' + admStatus(x) + '</td><td><b>' + (x.status === 'done' ? x.score + '/' + x.total : '-') + '</b></td><td>' + (x.status === 'done' ? (x.passed ? '<span class="pf p">ผ่าน</span>' : '<span class="pf f">ไม่ผ่าน</span>') : '') + '</td><td>' + rt + '</td><td>' + (x.violations ? '<b style="color:var(--rose)">' + x.violations + '</b><div class="vlog">' + esc(vl) + '</div>' : '0') + '</td><td>' + (x.hasPhoto || x.hasRetakePhoto ? '<button class="thumb" data-ph="' + esc(x.key) + '">📷</button>' : '<span class="muted">—</span>') + '</td><td class="code">' + esc(x.code || '') + '</td><td><div class="act">' + (x.deviceBound ? '<button data-rel="' + esc(x.key) + '">🔓 ปลดล็อกเครื่อง</button>' : '') + (x.status !== 'none' ? '<button data-rst="' + esc(x.key) + '">♻️ รีเซ็ตสอบ</button>' : '') + (x.retakeAttempts ? '<button data-rrt="' + esc(x.key) + '">🧹 ล้างแก้ตัว</button>' : '') + '</div></td></tr>';
+    return '<tr class="' + (fresh.indexOf(x) >= 0 ? 'flash' : '') + '"><td>' + clsLabel(x.cls) + '</td><td>' + x.no + '</td><td><b>' + esc(fullName(x)) + '</b>' + (x.deviceBound ? '<br><small class="muted">📱 …' + esc(x.deviceShort) + '</small>' : '') + '</td><td>' + admStatus(x) + '</td><td><b>' + (x.status === 'done' ? x.score + '/' + x.total : '-') + '</b></td><td>' + (x.status === 'done' ? (x.passed ? '<span class="pf p">ผ่าน</span>' : '<span class="pf f">ไม่ผ่าน</span>') : '') + '</td><td>' + rt + '</td><td>' + (x.violations ? '<b style="color:var(--rose)">' + x.violations + '</b><div class="vlog">' + esc(vl) + '</div>' : '0') + '</td><td>' + (x.hasPhoto || x.hasRetakePhoto ? '<button class="thumb" data-ph="' + esc(x.key) + '">📷</button>' : '<span class="muted">—</span>') + '</td><td class="code">' + esc(x.code || '') + '</td><td><div class="act">' + (x.deviceBound ? '<button data-rel="' + esc(x.key) + '">🔓 ปลดล็อกเครื่อง</button>' : '') + (x.status !== 'none' ? '<button data-rst="' + esc(x.key) + '">♻️ รีเซ็ตสอบ</button>' : '') + (x.retakeAttempts ? '<button data-rrt="' + esc(x.key) + '">🧹 ล้างแก้ตัว</button>' : '') + '</div></td></tr>';
   }).join('') || '<tr><td colspan="11" style="text-align:center;padding:30px" class="muted">ไม่มีข้อมูล (ใส่รายชื่อในชีท Students)</td></tr>';
 }
 $('#tbody').addEventListener('click', async e => {
   const b = e.target.closest('button'); if (!b) return;
   const key = b.dataset.rel || b.dataset.rst || b.dataset.rrt || b.dataset.ph;
   const x = ADM.rows.find(r => r.key === key); if (!x) return;
-  const nm = esc(x.first + ' ' + x.last) + ' (' + clsLabel(x.cls) + ' #' + x.no + ')';
+  const nm = esc(fullName(x)) + ' (' + clsLabel(x.cls) + ' #' + x.no + ')';
   if (b.dataset.ph) {
     busy(true, 'กำลังโหลดภาพ…'); const r = await api('adminPhoto', { pin: ADM.pin, key: key }); busy(false);
     if (!r.ok) { toast(errText(r).replace(/<[^>]+>/g, ''), 'err'); return; }
-    await modal({ icon: '📷', title: x.first + ' ' + x.last, html: '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">' + (r.photo ? '<figure style="margin:0"><img src="' + r.photo + '" style="width:180px;border-radius:14px"><figcaption class="muted">สอบจริง</figcaption></figure>' : '') + (r.retakePhoto ? '<figure style="margin:0"><img src="' + r.retakePhoto + '" style="width:180px;border-radius:14px"><figcaption class="muted">แก้ตัวล่าสุด</figcaption></figure>' : '') + '</div>' });
+    await modal({ icon: '📷', title: fullName(x), html: '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">' + (r.photo ? '<figure style="margin:0"><img src="' + r.photo + '" style="width:180px;border-radius:14px"><figcaption class="muted">สอบจริง</figcaption></figure>' : '') + (r.retakePhoto ? '<figure style="margin:0"><img src="' + r.retakePhoto + '" style="width:180px;border-radius:14px"><figcaption class="muted">แก้ตัวล่าสุด</figcaption></figure>' : '') + '</div>' });
     return;
   }
   let action, payload = { pin: ADM.pin, key: key }, q;
@@ -1899,8 +1903,8 @@ $('#saveSetBtn').onclick = async () => {
   admLoad();
 };
 $('#csvBtn').onclick = () => {
-  const H = ['ห้อง', 'เลขที่', 'ชื่อ', 'นามสกุล', 'สถานะ', 'คะแนน', 'เต็ม', 'ผล', 'ต้องแก้ตัว', 'แก้ตัวสำเร็จ', 'รอบที่ทำ', 'ทุจริต', 'รหัสยืนยัน', 'เวลาส่ง'];
-  const L = [H].concat(ADM.rows.map(x => [clsLabel(x.cls), x.no, x.first, x.last, x.status === 'done' ? 'ส่งแล้ว' : x.status === 'in_progress' ? 'กำลังสอบ' : (x.deviceBound ? 'เข้าระบบแล้ว' : 'ยังไม่เข้า'), x.status === 'done' ? x.score : '', x.total, x.status === 'done' ? (x.passed ? 'ผ่าน' : 'ไม่ผ่าน') : '', x.retakeRequired, Math.min(x.retakeDone, x.retakeRequired || x.retakeDone), x.retakeAttempts, x.violations, x.code, x.finishEpoch ? thTime(x.finishEpoch) : '']));
+  const H = ['ห้อง', 'เลขที่', 'ชื่อ - นามสกุล', 'สถานะ', 'คะแนน', 'เต็ม', 'ผล', 'ต้องแก้ตัว', 'แก้ตัวสำเร็จ', 'รอบที่ทำ', 'ทุจริต', 'รหัสยืนยัน', 'เวลาส่ง'];
+  const L = [H].concat(ADM.rows.map(x => [clsLabel(x.cls), x.no, fullName(x), x.status === 'done' ? 'ส่งแล้ว' : x.status === 'in_progress' ? 'กำลังสอบ' : (x.deviceBound ? 'เข้าระบบแล้ว' : 'ยังไม่เข้า'), x.status === 'done' ? x.score : '', x.total, x.status === 'done' ? (x.passed ? 'ผ่าน' : 'ไม่ผ่าน') : '', x.retakeRequired, Math.min(x.retakeDone, x.retakeRequired || x.retakeDone), x.retakeAttempts, x.violations, x.code, x.finishEpoch ? thTime(x.finishEpoch) : '']));
   const csv = '﻿' + L.map(r => r.map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',')).join('\r\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'ผลสอบ_Professional_' + new Date().toISOString().slice(0, 10) + '.csv';
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
