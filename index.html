@@ -106,9 +106,18 @@ footer.by{text-align:center;color:var(--dim);font-size:13px;margin-top:26px}
 .brand{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-weight:700;font-size:14px}
 .brand .dot{width:6px;height:6px;border-radius:50%;background:var(--coral)}
 .home-head{position:relative;overflow:hidden}
-.home-head .hh-photo{position:absolute;right:0;top:0;bottom:0;width:46%;background-size:cover;background-position:50% 50%;opacity:.6;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%);pointer-events:none}
+.home-head .hh-photo{position:absolute;right:0;top:0;bottom:0;width:64%;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%);mask-image:linear-gradient(90deg,transparent 0,#000 38%);pointer-events:none;transform-origin:70% 30%;animation:hhZoom 16s ease-in-out infinite alternate}
+.home-head.custom .hh-photo{background-position:50% 18%}
+@keyframes hhZoom{from{transform:scale(1)}to{transform:scale(1.05)}}
+.home-head::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,16,48,.92) 0,rgba(10,16,48,.55) 42%,rgba(10,16,48,0) 70%)}
 .home-head>*:not(.hh-photo){position:relative;z-index:1}
+.home-head #logoutBtn{position:absolute;top:14px;right:14px;background:rgba(10,16,48,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media(max-width:700px){
+  .home-head{flex-wrap:wrap;align-items:flex-end;padding-top:210px!important}
+  .home-head .hh-photo{width:100%;bottom:auto;height:260px;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}
+  .home-head::after{background:linear-gradient(180deg,rgba(10,16,48,0) 40%,rgba(10,16,48,.9) 80%)}
+}
 .splash-photo{width:150px;height:150px;border-radius:50%;margin:0 auto 22px;position:relative}
 .splash-photo{animation:pulse 2.6s ease-in-out infinite}
 .splash-photo .ph{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,.85);background:#dfe3ea}
@@ -138,7 +147,7 @@ footer.by{text-align:center;color:var(--dim);font-size:13px;margin-top:26px}
 .offline-note{margin-top:14px;padding:10px 14px;border-radius:12px;background:rgba(255,179,71,.12);border:1px solid rgba(255,179,71,.4);color:#ffd9a3;font-size:13.5px;display:none}
 
 /* ---------- home ---------- */
-.home-head{display:flex;align-items:center;gap:16px;padding:20px}
+.home-head{display:flex;align-items:center;gap:16px;padding:20px 24px;min-height:250px}
 .home-head h2{margin:0;font-size:22px}
 .home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px}
 .action-card{padding:22px;border-radius:var(--r);position:relative;overflow:hidden;transition:transform .25s}
@@ -1165,6 +1174,7 @@ function setHeroSrc(src) {
   const sp = document.querySelector('.splash-photo');
   sp.classList.toggle('custom', src !== HERO_DEFAULT);
   sp.classList.add('ready');
+  $('.home-head').classList.toggle('custom', src !== HERO_DEFAULT);
 }
 // ใช้ลิงก์รูปจากการตั้งค่า ถ้าโหลดไม่ได้จะกลับไปใช้รูปเดิมอัตโนมัติ
 function applyHero(url) {
