@@ -1,0 +1,1895 @@
+<!doctype html>
+<html lang="th" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="google" content="notranslate">
+<meta name="theme-color" content="#070b1f">
+<title>Reading Comprehension: What Does "Professional" Mean?</title>
+<style>
+:root{
+  --bg1:#060a1c;--bg2:#0c1440;--ink:#eef2ff;--muted:#a7b2da;--dim:#6f7aa6;
+  --em:#2ee6a6;--em2:#13b981;--gold:#ffd166;--vio:#7c5cff;--sky:#4cc9ff;--rose:#ff5d8f;--amber:#ffb347;
+  --card:rgba(255,255,255,.065);--card2:rgba(255,255,255,.1);--line:rgba(255,255,255,.14);
+  --r:22px;--shadow:0 20px 60px rgba(0,0,0,.45);
+  --font:system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Leelawadee UI",Thonburi,"Sukhumvit Set",Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:var(--font);color:var(--ink);background:var(--bg1);overflow-x:hidden;min-height:100vh;min-height:100dvh}
+body::before{content:"";position:fixed;inset:-20%;z-index:-2;
+  background:radial-gradient(40% 35% at 20% 20%,rgba(124,92,255,.35),transparent 70%),
+             radial-gradient(35% 30% at 85% 15%,rgba(46,230,166,.22),transparent 70%),
+             radial-gradient(45% 40% at 70% 90%,rgba(76,201,255,.22),transparent 70%),
+             linear-gradient(160deg,var(--bg1),var(--bg2));
+  animation:aurora 22s ease-in-out infinite alternate}
+@keyframes aurora{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-3%,2%) rotate(3deg)}100%{transform:translate(2%,-3%) rotate(-2deg)}}
+#bgfx,#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#bgfx{z-index:-1;opacity:.7}#confetti{z-index:60}
+button{font-family:inherit;cursor:pointer}
+.screen{display:none;min-height:100vh;min-height:100dvh;padding:max(18px,env(safe-area-inset-top)) 16px 40px}
+.screen.active{display:block;animation:scrIn .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes scrIn{from{opacity:0;transform:translateY(18px) scale(.985);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.wrap{max-width:980px;margin:0 auto}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:var(--shadow)}
+.grad-text{background:linear-gradient(90deg,var(--em),var(--sky),var(--vio),var(--gold),var(--em));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:300% 0}}
+.btn{border:0;border-radius:16px;padding:14px 22px;font-size:17px;font-weight:700;color:#06121f;
+  background:linear-gradient(135deg,var(--em),var(--sky));box-shadow:0 10px 30px rgba(46,230,166,.35);
+  transition:transform .15s,box-shadow .2s,filter .2s;position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(46,230,166,.45)}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{filter:grayscale(1) brightness(.6);cursor:not-allowed;transform:none;box-shadow:none}
+.btn.gold{background:linear-gradient(135deg,var(--gold),var(--amber));box-shadow:0 10px 30px rgba(255,179,71,.35)}
+.btn.vio{background:linear-gradient(135deg,var(--vio),#b06bff);color:#fff;box-shadow:0 10px 30px rgba(124,92,255,.4)}
+.btn.rose{background:linear-gradient(135deg,var(--rose),#ff8a5b);color:#fff;box-shadow:0 10px 30px rgba(255,93,143,.35)}
+.btn.ghost{background:rgba(255,255,255,.08);color:var(--ink);box-shadow:none;border:1px solid var(--line)}
+.btn.small{padding:9px 14px;font-size:14px;border-radius:12px}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
+.btn:hover::after{transform:translateX(120%)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(255,255,255,.1);border:1px solid var(--line)}
+.muted{color:var(--muted)}
+input,select{font-family:inherit;font-size:17px;color:var(--ink);background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:14px;padding:13px 14px;width:100%;outline:none;transition:border .2s,box-shadow .2s}
+input:focus,select:focus{border-color:var(--em);box-shadow:0 0 0 4px rgba(46,230,166,.18)}
+select option{color:#111;background:#fff}
+label.lbl{display:block;font-weight:700;margin:14px 0 8px;color:var(--muted);font-size:14px;letter-spacing:.3px}
+footer.by{text-align:center;color:var(--dim);font-size:13px;margin-top:26px}
+
+/* ---------- splash ---------- */
+#sc-splash{display:none;place-items:center;text-align:center}
+#sc-splash.active{display:grid}
+.globe{width:180px;height:180px;margin:0 auto 26px;position:relative}
+.globe .ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(46,230,166,.6);animation:spin 6s linear infinite}
+.globe .ring:nth-child(2){transform:rotateX(70deg);border-color:rgba(76,201,255,.6);animation:spinX 5s linear infinite}
+.globe .ring:nth-child(3){transform:rotateY(70deg);border-color:rgba(124,92,255,.7);animation:spinY 7s linear infinite}
+.globe .core{position:absolute;inset:30%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--em) 30%,var(--vio) 75%);box-shadow:0 0 60px rgba(46,230,166,.6);animation:pulse 2.4s ease-in-out infinite}
+.globe .dot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold);top:-6px;left:calc(50% - 6px);transform-origin:6px 96px;animation:spin 3.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinX{to{transform:rotateX(70deg) rotate(360deg)}}
+@keyframes spinY{to{transform:rotateY(70deg) rotate(360deg)}}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.title-xl{font-size:clamp(26px,5.6vw,52px);font-weight:900;line-height:1.12;margin:0;letter-spacing:-.5px}
+.title-xl .w{display:inline-block;opacity:0;transform:translateY(30px) rotateX(70deg);animation:wordIn .8s cubic-bezier(.2,.9,.3,1.3) forwards}
+@keyframes wordIn{to{opacity:1;transform:none}}
+.sub{font-size:clamp(15px,2.6vw,19px);color:var(--muted);margin:14px 0 0}
+.loader-bar{width:min(320px,70vw);height:6px;border-radius:9px;background:rgba(255,255,255,.1);margin:28px auto 0;overflow:hidden}
+.loader-bar i{display:block;height:100%;width:40%;border-radius:9px;background:linear-gradient(90deg,var(--em),var(--sky),var(--vio));animation:load 1.3s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
+
+/* ---------- hero photo ---------- */
+:root{--coral:#ff8a65}
+.login-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:22px;align-items:center}
+@media(min-width:900px){.login-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;min-height:calc(100vh - 80px)}}
+.photo-stage{position:relative;perspective:1200px;margin:6px auto 0;width:min(420px,100%)}
+.photo-card{position:relative;border-radius:34px;overflow:hidden;aspect-ratio:3/4.1;transform-style:preserve-3d;transition:transform .25s ease-out;
+  box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.18);animation:cardIn 1.1s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(40px) rotateY(-18deg) scale(.9)}}
+.photo-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;animation:kenburns 18s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1.04)}to{transform:scale(1.16) translateY(-2%)}}
+.photo-card::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,10,28,0) 45%,rgba(6,10,28,.55) 72%,rgba(6,10,28,.95) 100%)}
+.photo-card::after{content:"";position:absolute;inset:-60%;z-index:2;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.22) 50%,transparent 58%);animation:sheen 6s ease-in-out infinite;pointer-events:none}
+@keyframes sheen{0%,60%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
+.photo-cap{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:22px 22px 24px}
+.photo-cap .k{display:inline-block;font-size:12px;font-weight:900;letter-spacing:2px;color:#06121f;background:linear-gradient(135deg,var(--gold),var(--coral));padding:6px 12px;border-radius:999px}
+.photo-cap h2{margin:10px 0 2px;font-size:clamp(24px,3.2vw,34px);font-weight:900;line-height:1.1}
+.photo-cap p{margin:0;color:#d6dcf5;font-size:14px}
+.halo{position:absolute;inset:-14px;border-radius:44px;z-index:-1;background:conic-gradient(from 0deg,var(--em),var(--sky),var(--vio),var(--coral),var(--gold),var(--em));filter:blur(22px);opacity:.6;animation:glowHue 8s linear infinite}
+@keyframes glowHue{50%{opacity:.85;filter:blur(26px) hue-rotate(180deg)}}
+.splash-photo .halo{animation:spin 6s linear infinite;filter:blur(14px)}
+.float-chip{position:absolute;z-index:4;padding:9px 14px;border-radius:16px;font-weight:800;font-size:14px;white-space:nowrap;
+  background:rgba(12,20,64,.78);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 30px rgba(0,0,0,.4);animation:floaty 5s ease-in-out infinite}
+.float-chip.c1{top:9%;left:-18px;animation-delay:-1s}
+.float-chip.c2{top:34%;right:-22px;animation-delay:-2.6s}
+.float-chip.c3{top:58%;left:-26px;animation-delay:-3.8s}
+@keyframes floaty{50%{transform:translateY(-12px)}}
+@media(max-width:899px){.photo-card{aspect-ratio:auto;height:min(58vh,440px)}.float-chip{font-size:12.5px;padding:7px 11px}.float-chip.c1{left:-6px}.float-chip.c2{right:-6px}.float-chip.c3{left:-6px}}
+.brand{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-weight:700;font-size:14px}
+.brand .dot{width:6px;height:6px;border-radius:50%;background:var(--coral)}
+.home-head{position:relative;overflow:hidden}
+.home-head .hh-photo{position:absolute;right:0;top:0;bottom:0;width:46%;background-size:cover;background-position:50% 50%;opacity:.6;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%);pointer-events:none}
+.home-head>*:not(.hh-photo){position:relative;z-index:1}
+.splash-photo{width:150px;height:150px;border-radius:50%;margin:0 auto 22px;position:relative}
+.splash-photo{animation:pulse 2.6s ease-in-out infinite}
+.splash-photo .ph{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,.85);background:#dfe3ea}
+.splash-photo img{width:100%;height:100%;object-fit:cover;transform:scale(2.5);transform-origin:52% 53%}
+.splash-photo .halo{border-radius:50%;inset:-10px}
+
+/* ---------- hero / login ---------- */
+.hero{text-align:center;padding:26px 6px 8px}
+@media(min-width:900px){.login-grid .hero{text-align:left;padding-top:0}.login-grid .brand{justify-content:flex-start}}
+.hero .badge{display:inline-flex;gap:8px;align-items:center;padding:7px 14px;border-radius:999px;background:rgba(46,230,166,.12);border:1px solid rgba(46,230,166,.35);color:var(--em);font-weight:800;font-size:13px;letter-spacing:1px}
+.hero h1{font-size:clamp(24px,4.6vw,44px);font-weight:900;margin:14px 0 6px;line-height:1.15}
+.panel{padding:24px;margin-top:18px}
+.cls-row{display:flex;gap:10px;flex-wrap:wrap}
+.cls-btn{flex:1;min-width:110px;padding:16px 10px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);font-size:20px;font-weight:900;transition:all .2s}
+.cls-btn:hover{border-color:var(--em);transform:translateY(-2px)}
+.cls-btn.on{background:linear-gradient(135deg,rgba(46,230,166,.3),rgba(76,201,255,.25));border-color:var(--em);box-shadow:0 0 0 4px rgba(46,230,166,.15),0 10px 30px rgba(46,230,166,.25)}
+.who{display:none;align-items:center;gap:14px;margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(255,209,102,.1);border:1px dashed rgba(255,209,102,.5)}
+.who.show{display:flex;animation:scrIn .4s}
+.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:22px;background:linear-gradient(135deg,var(--vio),var(--sky));flex:none}
+.resume{display:none;margin-top:14px}
+.resume.show{display:block}
+.tiny-admin{background:none;border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:7px 14px;font-size:12.5px;margin-top:14px}
+.tiny-admin:hover{color:var(--ink);border-color:var(--em)}
+.offline-note{margin-top:14px;padding:10px 14px;border-radius:12px;background:rgba(255,179,71,.12);border:1px solid rgba(255,179,71,.4);color:#ffd9a3;font-size:13.5px;display:none}
+
+/* ---------- home ---------- */
+.home-head{display:flex;align-items:center;gap:16px;padding:20px}
+.home-head h2{margin:0;font-size:22px}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px}
+.action-card{padding:22px;border-radius:var(--r);position:relative;overflow:hidden;transition:transform .25s}
+.action-card:hover{transform:translateY(-4px)}
+.action-card .ico{font-size:40px;display:inline-block;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+.action-card h3{margin:10px 0 6px;font-size:21px}
+.action-card p{margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.55}
+.action-card .btn{width:100%}
+.action-card.exam{background:linear-gradient(160deg,rgba(46,230,166,.16),rgba(255,255,255,.04))}
+.action-card.retake{background:linear-gradient(160deg,rgba(255,179,71,.16),rgba(255,255,255,.04))}
+.action-card.res{background:linear-gradient(160deg,rgba(124,92,255,.2),rgba(255,255,255,.04))}
+.prog-dots{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.prog-dots i{width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.1);border:1px solid var(--line)}
+.prog-dots i.ok{background:linear-gradient(135deg,var(--gold),var(--amber));border-color:transparent;box-shadow:0 0 12px rgba(255,209,102,.5)}
+.stat-line{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+
+/* ---------- rules ---------- */
+.rules li{margin:10px 0;line-height:1.6;color:#dfe5ff}
+.agree{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);margin:16px 0;cursor:pointer}
+.agree input{width:24px;height:24px;flex:none;accent-color:var(--em)}
+
+/* ---------- exam ---------- */
+#sc-exam{padding-top:0;padding-bottom:110px}
+.ex-top{position:sticky;top:0;z-index:20;padding:max(10px,env(safe-area-inset-top)) 16px 10px;background:linear-gradient(180deg,rgba(6,10,28,.95),rgba(6,10,28,.75));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin:0 -16px}
+.ex-top .row{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ex-title{font-weight:900;font-size:15px;flex:1;min-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;font-size:18px;padding:7px 14px;border-radius:12px;background:rgba(46,230,166,.14);border:1px solid rgba(46,230,166,.4);color:var(--em)}
+.timer.warn{background:rgba(255,93,143,.16);border-color:rgba(255,93,143,.6);color:var(--rose);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.55}}
+.vpill{display:none;background:rgba(255,93,143,.18);border-color:rgba(255,93,143,.5);color:#ffb3c9}
+.vpill.show{display:inline-flex}
+.progress{height:6px;border-radius:9px;background:rgba(255,255,255,.08);max-width:1280px;margin:10px auto 0;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--em),var(--sky),var(--vio));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.ex-body{max-width:1280px;margin:16px auto 0;display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:980px){.ex-body{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}.passage{position:sticky;top:96px;max-height:calc(100vh - 116px)}.passage-toggle{display:none!important}.passage .close{display:none}}
+.passage{padding:20px 22px;overflow:auto}
+.passage h3{margin:0 0 4px;font-size:19px}
+.passage p{line-height:1.85;font-size:var(--pfs,16.5px);margin:12px 0;color:#e7ecff}
+.passage p b{color:var(--em);font-size:12px;margin-right:6px;vertical-align:2px}
+.ptools{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+@media(max-width:979px){
+  .passage{position:fixed;left:8px;right:8px;bottom:8px;top:18vh;z-index:40;transform:translateY(110%);transition:transform .45s cubic-bezier(.2,.8,.2,1);background:rgba(10,16,48,.97)}
+  .passage.open{transform:none}
+}
+.passage-toggle{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;border-radius:999px;padding:14px 18px}
+.qcard{padding:24px;position:relative;overflow:hidden}
+.qcard.enter{animation:qIn .5s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes qIn{from{opacity:0;transform:translateX(40px) rotateY(-12deg)}to{opacity:1;transform:none}}
+.qmeta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.diff{font-size:12.5px;font-weight:900;padding:5px 11px;border-radius:999px;letter-spacing:.5px}
+.diff.E{background:rgba(46,230,166,.18);color:var(--em);border:1px solid rgba(46,230,166,.45)}
+.diff.M{background:rgba(255,209,102,.16);color:var(--gold);border:1px solid rgba(255,209,102,.45)}
+.diff.H{background:rgba(255,93,143,.16);color:#ff9dbb;border:1px solid rgba(255,93,143,.45)}
+.qnum{font-weight:900;color:var(--muted)}
+.qtext{font-size:clamp(18px,2.3vw,21px);line-height:1.6;font-weight:700;margin:4px 0 18px}
+.opts{display:grid;gap:12px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;padding:15px 16px;border-radius:16px;border:1.5px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);font-size:16.5px;line-height:1.5;transition:all .18s;position:relative}
+.opt:hover{border-color:rgba(76,201,255,.7);background:rgba(76,201,255,.08);transform:translateX(4px)}
+.opt .l{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-weight:900;background:rgba(255,255,255,.1)}
+.opt.sel{border-color:var(--em);background:linear-gradient(135deg,rgba(46,230,166,.22),rgba(76,201,255,.12));box-shadow:0 0 0 4px rgba(46,230,166,.14),0 10px 26px rgba(46,230,166,.18)}
+.opt.sel .l{background:var(--em);color:#06121f}
+.opt.pop{animation:pop .35s}
+@keyframes pop{40%{transform:scale(1.03)}}
+.qnav{display:flex;gap:10px;margin-top:20px;justify-content:space-between;flex-wrap:wrap}
+.grid-nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:8px;margin-top:16px}
+.grid-nav button{height:42px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);font-weight:800}
+.grid-nav button.ans{background:rgba(46,230,166,.2);border-color:rgba(46,230,166,.5)}
+.grid-nav button.cur{outline:3px solid var(--gold);outline-offset:1px}
+.noselect,.noselect *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+
+/* ---------- result ---------- */
+.res-wrap{max-width:720px;margin:0 auto;text-align:center}
+.ring-box{position:relative;width:230px;height:230px;margin:10px auto}
+.ring-box svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-box .num{position:absolute;inset:0;display:grid;place-items:center;align-content:center}
+.ring-box .num b{font-size:64px;font-weight:900;line-height:1}
+.ring-box .num span{color:var(--muted);font-weight:700}
+.stamp{display:inline-block;font-size:30px;font-weight:900;letter-spacing:3px;padding:8px 22px;border:4px solid;border-radius:14px;transform:rotate(-8deg) scale(3);opacity:0;animation:stamp .6s .9s cubic-bezier(.3,1.6,.4,1) forwards}
+.stamp.pass{color:var(--em);border-color:var(--em);text-shadow:0 0 18px rgba(46,230,166,.6)}
+.stamp.fail{color:var(--rose);border-color:var(--rose);text-shadow:0 0 18px rgba(255,93,143,.6)}
+@keyframes stamp{to{opacity:1;transform:rotate(-8deg) scale(1)}}
+.cap-card{margin-top:22px;padding:24px;text-align:left;border-radius:26px;background:linear-gradient(150deg,rgba(124,92,255,.25),rgba(46,230,166,.12) 60%,rgba(255,209,102,.12));border:1px solid rgba(255,255,255,.22);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.cap-card::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.08),transparent 30%);animation:spin 12s linear infinite}
+.cap-card>*{position:relative}
+.cap-head{display:flex;gap:14px;align-items:center}
+.cap-head img{width:74px;height:74px;border-radius:18px;object-fit:cover;border:2px solid rgba(255,255,255,.4)}
+.cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.cap-grid div{background:rgba(0,0,0,.22);border-radius:14px;padding:10px 12px}
+.cap-grid small{display:block;color:var(--muted);font-size:12px}
+.cap-grid b{font-size:17px}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:3px;color:var(--gold)}
+.res-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+
+/* ---------- overlays ---------- */
+.overlay{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:18px;background:rgba(3,6,20,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.overlay.open{display:grid;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.modal-card{width:min(520px,100%);padding:26px;text-align:center;animation:mIn .4s cubic-bezier(.2,.9,.3,1.3);max-height:90vh;overflow:auto}
+@keyframes mIn{from{opacity:0;transform:scale(.85) translateY(20px)}}
+.modal-card .mi{font-size:50px}
+.modal-card h3{margin:8px 0;font-size:22px}
+.modal-card .mb{color:#d7ddf7;line-height:1.65}
+.modal-card .mbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+#busy{z-index:95}
+#busy p{margin-top:18px;font-weight:700;text-align:center}
+.orb{width:84px;height:84px;border-radius:50%;margin:0 auto;border:5px solid rgba(255,255,255,.12);border-top-color:var(--em);border-right-color:var(--sky);animation:spin .9s linear infinite;box-shadow:0 0 40px rgba(46,230,166,.3)}
+#warn .modal-card{border-color:rgba(255,93,143,.6);background:rgba(40,8,24,.92)}
+#warn .mi{animation:shake .5s 2}
+@keyframes shake{25%{transform:translateX(-8px) rotate(-6deg)}75%{transform:translateX(8px) rotate(6deg)}}
+#toasts{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:99;display:grid;gap:8px;width:min(92vw,440px)}
+.toast{padding:12px 16px;border-radius:14px;background:rgba(15,22,60,.95);border:1px solid var(--line);box-shadow:var(--shadow);font-weight:700;animation:tIn .35s cubic-bezier(.2,.9,.3,1.3)}
+.toast.err{border-color:rgba(255,93,143,.6)}.toast.ok{border-color:rgba(46,230,166,.6)}
+@keyframes tIn{from{opacity:0;transform:translateY(-14px) scale(.95)}}
+
+/* face scan */
+.scan-card{width:min(460px,100%);padding:22px;text-align:center}
+.cam{position:relative;width:min(320px,78vw);aspect-ratio:3/4;margin:14px auto;border-radius:28px;overflow:hidden;background:#000}
+.cam video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.cam .oval{position:absolute;left:17%;right:17%;top:12%;bottom:18%;border-radius:50%;border:4px dashed rgba(255,255,255,.65);box-shadow:0 0 0 999px rgba(0,0,0,.45);transition:border-color .25s}
+.cam.ok .oval{border-style:solid;border-color:var(--em);box-shadow:0 0 0 999px rgba(0,0,0,.35),0 0 40px var(--em) inset}
+.cam .laser{position:absolute;left:10%;right:10%;height:3px;top:15%;background:linear-gradient(90deg,transparent,var(--em),transparent);box-shadow:0 0 18px var(--em);animation:laser 2s ease-in-out infinite}
+@keyframes laser{50%{top:80%}}
+.cam .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.cam .flash.go{animation:flash .5s}
+@keyframes flash{20%{opacity:.9}}
+.scan-meter{height:8px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin:6px auto 10px;width:min(320px,78vw)}
+.scan-meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--em),var(--sky));transition:width .2s}
+#scanStatus{font-weight:800;min-height:26px}
+
+/* admin */
+.adm-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;padding:18px 20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:14px}
+.stat{padding:14px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.stat b{display:block;font-size:28px;font-weight:900}
+.stat small{color:var(--muted)}
+.tabs{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.tab{padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);font-weight:800}
+.tab.on{background:linear-gradient(135deg,rgba(46,230,166,.3),rgba(76,201,255,.2));border-color:var(--em)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.filters input,.filters select{width:auto;flex:1;min-width:150px;padding:10px 12px;font-size:15px}
+.tbl-wrap{overflow:auto;border-radius:18px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:980px}
+th,td{padding:10px 10px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;vertical-align:middle}
+th{position:sticky;top:0;background:#111a4a;font-size:12.5px;color:var(--muted);letter-spacing:.3px;z-index:1}
+tr:hover td{background:rgba(255,255,255,.04)}
+tr.flash td{animation:rowf 1.4s}
+@keyframes rowf{0%{background:rgba(255,93,143,.35)}}
+.st{font-weight:800;font-size:12.5px;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.st.none{background:rgba(255,255,255,.08);color:var(--muted)}
+.st.bound{background:rgba(76,201,255,.15);color:var(--sky)}
+.st.prog{background:rgba(255,209,102,.16);color:var(--gold)}
+.st.done{background:rgba(46,230,166,.16);color:var(--em)}
+.pf{font-weight:900}.pf.p{color:var(--em)}.pf.f{color:var(--rose)}
+.thumb{width:40px;height:40px;border-radius:10px;object-fit:cover;cursor:pointer;background:rgba(255,255,255,.1);border:0;color:var(--muted);font-size:18px}
+.act{display:flex;gap:6px;flex-wrap:wrap}
+.act button{padding:6px 9px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);font-size:12.5px;font-weight:700}
+.act button:hover{border-color:var(--em)}
+.set-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px}
+.set{padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.set h4{margin:0 0 4px;font-size:16px}
+.set p{margin:0 0 10px;color:var(--muted);font-size:13px}
+.switch{position:relative;display:inline-block;width:62px;height:34px}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;border-radius:999px;background:rgba(255,255,255,.15);transition:.25s}
+.switch span::before{content:"";position:absolute;width:26px;height:26px;left:4px;top:4px;border-radius:50%;background:#fff;transition:.25s}
+.switch input:checked+span{background:linear-gradient(135deg,var(--em),var(--sky))}
+.switch input:checked+span::before{transform:translateX(28px)}
+.vlog{font-size:12px;color:#ffb3c9;max-width:160px}
+.set.wide{grid-column:1/-1}
+.img-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.img-row .pv{width:96px;height:128px;border-radius:16px;object-fit:cover;background:rgba(255,255,255,.08);border:1px solid var(--line);flex:none}
+.img-row .ctl{flex:1;min-width:240px;display:grid;gap:10px}
+.img-row .btns{display:flex;gap:8px;flex-wrap:wrap}
+.img-msg{font-size:13px;min-height:18px}
+@media(max-width:560px){.cap-grid{grid-template-columns:1fr}.panel{padding:18px}.qcard{padding:18px}.opt{font-size:15.5px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
+</style>
+</head>
+<body class="notranslate">
+<canvas id="bgfx"></canvas>
+<canvas id="confetti"></canvas>
+
+<!-- ================= SPLASH ================= -->
+<section id="sc-splash" class="screen active">
+  <div>
+    <div class="splash-photo"><div class="halo"></div><div class="ph"><img alt="" id="splashImg"></div></div>
+    <h1 class="title-xl" id="splashTitle"></h1>
+    <p class="sub">Basic English Course · ม.6 · By T.OAT</p><p class="muted" style="margin:6px 0 0;font-weight:700;letter-spacing:.5px">Thanakhan-Oomsin School</p>
+    <div class="loader-bar"><i></i></div>
+    <p class="muted" id="splashMsg" style="margin-top:14px">กำลังเตรียมระบบ…</p>
+  </div>
+</section>
+
+<!-- ================= LOGIN ================= -->
+<section id="sc-login" class="screen">
+  <div class="login-grid">
+    <div class="photo-stage" id="photoStage">
+      <div class="halo"></div>
+      <div class="photo-card" id="photoCard">
+        <img alt="นักเรียนโรงเรียนธนาคารออมสิน" id="heroImg" src="data:image/jpeg;base64,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">
+        <div class="photo-cap"><span class="k">BASIC ENGLISH COURSE</span><h2>Ready to be<br><span class="grad-text">Professional?</span></h2><p>Thanakhan-Oomsin School · ม.6</p></div>
+      </div>
+      <div class="float-chip c1">📖 Reading</div>
+      <div class="float-chip c2">🌍 Cultures</div>
+      <div class="float-chip c3">💼 Professional</div>
+    </div>
+    <div>
+    <div class="hero">
+      <span class="badge">📘 BASIC ENGLISH COURSE · READING COMPREHENSION</span>
+      <h1><span class="grad-text">What Does "Professional" Mean?</span></h1>
+      <p class="sub">อ่านบทความ แล้วตอบคำถาม 30 ข้อ · ง่าย · กลาง · ยาก · ม.6</p>
+      <div class="brand"><span>By T.OAT</span><span class="dot"></span><span>Thanakhan-Oomsin School</span></div>
+    </div>
+    <div class="glass panel">
+      <div class="resume" id="resumeBox">
+        <div class="who show" style="margin-top:0">
+          <div class="avatar" id="resumeAv">?</div>
+          <div style="flex:1"><small class="muted">ใช้งานล่าสุดบนเครื่องนี้</small><div style="font-weight:800" id="resumeName"></div></div>
+          <button class="btn small" id="resumeBtn">เข้าต่อ ➜</button>
+        </div>
+        <p class="muted" style="text-align:center;margin:14px 0 0;font-size:13px">— หรือเลือกชื่ออื่นด้านล่าง —</p>
+      </div>
+      <label class="lbl">1) เลือกชั้นเรียน</label>
+      <div class="cls-row" id="clsRow"></div>
+      <label class="lbl">2) เลือกชื่อของตัวเอง</label>
+      <select id="nameSel" disabled><option value="">— เลือกชั้นก่อน —</option></select>
+      <div class="who" id="whoBox">
+        <div class="avatar" id="whoAv">?</div>
+        <div style="flex:1"><div style="font-weight:800" id="whoName"></div><small class="muted" id="whoSub"></small></div>
+      </div>
+      <button class="btn" id="loginBtn" style="width:100%;margin-top:18px" disabled>เข้าสู่ระบบ 🚀</button>
+      <div class="offline-note" id="offlineNote">⚠️ โหมดทดลอง (ยังไม่ได้ใส่ GAS_URL) — ข้อมูลเก็บในเครื่องนี้เท่านั้น และใช้รายชื่อตัวอย่าง</div>
+    </div>
+    <div style="text-align:center"><button class="tiny-admin" id="toAdmin">🔐 Admin ครูโอ๊ต</button></div>
+    <footer class="by">Basic English Course · By T.OAT · Thanakhan-Oomsin School</footer>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOME ================= -->
+<section id="sc-home" class="screen">
+  <div class="wrap">
+    <div class="glass home-head">
+      <div class="hh-photo" id="hhPhoto"></div>
+      <div class="avatar" id="homeAv">?</div>
+      <div style="flex:1;min-width:0">
+        <small class="muted">Basic English Course · ยินดีต้อนรับ 👋</small>
+        <h2 id="homeName"></h2>
+        <small class="muted" id="homeSub"></small>
+      </div>
+      <button class="btn ghost small" id="logoutBtn">ออก</button>
+    </div>
+    <div class="home-grid">
+      <div class="glass action-card exam">
+        <span class="ico">📝</span>
+        <h3>สอบจริง</h3>
+        <p id="examDesc"></p>
+        <button class="btn" id="examBtn">เริ่มทำข้อสอบ</button>
+      </div>
+      <div class="glass action-card retake" id="retakeCard">
+        <span class="ico">🔁</span>
+        <h3>สอบแก้ตัว</h3>
+        <div id="retakeInfo"></div>
+        <button class="btn gold" id="retakeBtn">สอบแก้ตัว</button>
+      </div>
+      <div class="glass action-card res" id="resCard">
+        <span class="ico">🏆</span>
+        <h3>ผลสอบ / บันทึกภาพ</h3>
+        <p>ดูผลสอบและบันทึกภาพหน้าจอ เพื่อส่งให้ครูโอ๊ต</p>
+        <button class="btn vio" id="viewResBtn">ดูผลสอบ</button>
+      </div>
+    </div>
+    <footer class="by">Basic English Course · By T.OAT · Thanakhan-Oomsin School</footer>
+  </div>
+</section>
+
+<!-- ================= RULES ================= -->
+<section id="sc-rules" class="screen">
+  <div class="wrap" style="max-width:720px">
+    <div class="hero"><span class="badge" id="rulesBadge">📝 สอบจริง</span><h1 id="rulesTitle">ก่อนเริ่มทำข้อสอบ</h1></div>
+    <div class="glass panel">
+      <ul class="rules" id="rulesList"></ul>
+      <label class="agree"><input type="checkbox" id="agreeChk"><span>ฉันอ่านกติกาแล้ว และจะทำข้อสอบด้วยตัวเองอย่างซื่อสัตย์ ✋</span></label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn ghost" id="rulesBack">⬅ กลับ</button>
+        <button class="btn" id="rulesGo" style="flex:1" disabled>เริ่มเลย ✨</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXAM ================= -->
+<section id="sc-exam" class="screen">
+  <div class="ex-top">
+    <div class="row">
+      <div class="ex-title" id="exTitle">What Does "Professional" Mean?</div>
+      <span class="chip" id="exMode">สอบจริง</span>
+      <span class="chip vpill" id="vPill">⚠️ 0</span>
+      <span class="timer" id="timer">--:--</span>
+    </div>
+    <div class="progress"><i id="progBar"></i></div>
+  </div>
+  <div class="ex-body" id="examRoot" translate="no">
+    <aside class="glass passage noselect" id="passage">
+      <div class="ptools">
+        <h3>📖 What Does "Professional" Mean?</h3>
+        <div style="display:flex;gap:6px">
+          <button class="btn ghost small" id="fsMinus">A−</button>
+          <button class="btn ghost small" id="fsPlus">A+</button>
+          <button class="btn ghost small close" id="passClose">✕</button>
+        </div>
+      </div>
+      <div id="passageBody"></div>
+    </aside>
+    <main>
+      <div class="glass qcard noselect" id="qcard">
+        <div class="qmeta"><span class="qnum" id="qNum"></span><span class="diff" id="qDiff"></span></div>
+        <div class="qtext" id="qText"></div>
+        <div class="opts" id="opts"></div>
+        <div class="qnav">
+          <button class="btn ghost" id="prevBtn">⬅ ข้อก่อน</button>
+          <button class="btn" id="nextBtn">ข้อถัดไป ➜</button>
+        </div>
+      </div>
+      <div class="glass" style="padding:18px;margin-top:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <b id="ansCount">ตอบแล้ว 0/30</b>
+          <button class="btn rose" id="submitBtn">ส่งคำตอบ 📨</button>
+        </div>
+        <div class="grid-nav" id="gridNav"></div>
+      </div>
+    </main>
+  </div>
+  <button class="btn vio passage-toggle" id="passOpen">📖 บทความ</button>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section id="sc-result" class="screen">
+  <div class="res-wrap">
+    <div class="hero" style="padding-bottom:0"><span class="badge" id="resBadge">ผลการสอบ</span></div>
+    <div class="ring-box">
+      <svg viewBox="0 0 120 120"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#2ee6a6"/><stop offset=".5" stop-color="#4cc9ff"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="10"/>
+        <circle id="ringArc" cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"/></svg>
+      <div class="num"><b id="resScore">0</b><span id="resTotal">/ 30</span></div>
+    </div>
+    <div><span class="stamp" id="resStamp">PASS</span></div>
+    <p class="sub" id="resMsg"></p>
+    <div class="cap-card" id="capCard"></div>
+    <div class="res-actions">
+      <button class="btn vio" id="saveImgBtn">💾 บันทึกเป็นรูปภาพ</button>
+      <button class="btn gold" id="resRetakeBtn">🔁 สอบแก้ตัว</button>
+      <button class="btn ghost" id="resHomeBtn">🏠 หน้าหลัก</button>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:14px">📸 แคปหน้าจอนี้ หรือกด “บันทึกเป็นรูปภาพ” แล้วส่งให้ครูโอ๊ต</p>
+  </div>
+</section>
+
+<!-- ================= ADMIN ================= -->
+<section id="sc-admin" class="screen">
+  <div class="wrap" style="max-width:1280px">
+    <div id="admGate" class="glass panel" style="max-width:420px;margin:12vh auto 0;text-align:center">
+      <div style="font-size:52px">🔐</div>
+      <h2 style="margin:6px 0">Admin ครูโอ๊ต</h2>
+      <p class="muted">ใส่รหัส PIN เพื่อเข้าสู่แดชบอร์ด</p>
+      <input id="pinIn" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" style="text-align:center;font-size:24px;letter-spacing:8px">
+      <div style="display:flex;gap:10px;margin-top:14px"><button class="btn ghost" id="admBack">⬅ กลับ</button><button class="btn" style="flex:1" id="pinGo">เข้าสู่ระบบ</button></div>
+    </div>
+    <div id="admMain" style="display:none">
+      <div class="glass adm-top">
+        <div><small class="muted">แดชบอร์ดสด · อัปเดตทุก 4 วินาที</small><h2 style="margin:2px 0">📊 Admin ครูโอ๊ต — What Does "Professional" Mean?</h2></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn small ghost" id="csvBtn">⬇ CSV</button><button class="btn small ghost" id="admOut">ออก</button></div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="tabs"><button class="tab on" data-tab="live">👥 นักเรียน</button><button class="tab" data-tab="set">⚙️ ตั้งค่า</button></div>
+      <div id="tabLive">
+        <div class="filters">
+          <select id="fCls"><option value="">ทุกห้อง</option></select>
+          <select id="fSt"><option value="">ทุกสถานะ</option><option value="none">ยังไม่เข้า</option><option value="prog">กำลังสอบ</option><option value="done">ส่งแล้ว</option><option value="pass">ผ่าน</option><option value="fail">ไม่ผ่าน</option><option value="rtodo">ต้องแก้ตัว (ยังไม่ครบ)</option></select>
+          <input id="fQ" placeholder="🔎 ค้นหาชื่อ / เลขที่">
+        </div>
+        <div class="tbl-wrap"><table><thead><tr><th>ห้อง</th><th>เลขที่</th><th>ชื่อ - นามสกุล</th><th>สถานะ</th><th>คะแนน</th><th>ผล</th><th>สอบแก้ตัว</th><th>⚠️ ทุจริต</th><th>📷</th><th>รหัสยืนยัน</th><th>จัดการ</th></tr></thead><tbody id="tbody"></tbody></table></div>
+      </div>
+      <div id="tabSet" style="display:none">
+        <div class="set-grid" id="setGrid"></div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="saveSetBtn">💾 บันทึกการตั้งค่า</button><span class="muted" id="setMsg" style="align-self:center"></span></div>
+      </div>
+      <footer class="by">Basic English Course · By T.OAT · Thanakhan-Oomsin School</footer>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OVERLAYS ================= -->
+<div id="scan" class="overlay">
+  <div class="glass scan-card">
+    <h3 style="margin:0">🛡️ สแกนใบหน้าก่อนเข้าสอบ</h3>
+    <p class="muted" style="margin:6px 0 0;font-size:14px">จัดใบหน้าให้อยู่ในกรอบวงรี อยู่ในที่มีแสงสว่าง</p>
+    <div class="cam" id="cam"><video id="camVideo" playsinline muted autoplay></video><div class="oval"></div><div class="laser"></div><div class="flash" id="camFlash"></div></div>
+    <div class="scan-meter"><i id="scanMeter"></i></div>
+    <div id="scanStatus">กำลังเปิดกล้อง…</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+      <button class="btn ghost small" id="scanCancel">ยกเลิก</button>
+      <button class="btn small" id="scanRetry" style="display:none">ลองใหม่</button>
+      <button class="btn gold small" id="scanManual" style="display:none">📸 ถ่ายภาพยืนยัน</button>
+    </div>
+  </div>
+</div>
+<div id="modal" class="overlay"><div class="glass modal-card" id="modalCard"></div></div>
+<div id="warn" class="overlay"><div class="glass modal-card">
+  <div class="mi">🚨</div><h3>ตรวจพบพฤติกรรมเสี่ยงทุจริต!</h3>
+  <p class="mb" id="warnText"></p>
+  <div class="mbtns"><button class="btn rose" id="warnOk">กลับไปทำข้อสอบ</button></div>
+</div></div>
+<div id="busy" class="overlay"><div><div class="orb"></div><p id="busyText">กำลังโหลด…</p></div></div>
+<div id="toasts"></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   ตั้งค่า: วาง URL ของ Google Apps Script Web App (ลงท้าย /exec) ระหว่าง ''
+   ถ้าเว้นว่าง = โหมดทดลองในเครื่อง (รายชื่อตัวอย่าง)
+   ===================================================================== */
+const CONFIG = {
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbz6C3vf6XKk6XqBFwEDM5cyYP9d0I6Z8V3DuV-TRu-Cc9NPzYg1Pu-XEoqSwrVY6n43OQ/exec',
+  ADMIN_PIN_OFFLINE: '7846'
+};
+
+const QUESTIONS = [{"id":"q01","d":"E","q":"According to the passage, in which countries is punctuality taken very seriously?","o":["Brazil and Mexico","Japan and Sweden","The United States and Israel","Germany and Switzerland"]},{"id":"q02","d":"E","q":"Who studied cultural attitudes toward time?","o":["Erin Meyer","A manager in Silicon Valley","Edward T. Hall","A Dutch business owner"]},{"id":"q03","d":"E","q":"What might a tech company in Silicon Valley welcome employees to wear?","o":["Formal business suits","T-shirts and sneakers","School uniforms","Traditional national dress"]},{"id":"q04","d":"E","q":"In which country do managers often use the \"sandwich method\" for feedback?","o":["The United States","The Netherlands","Israel","Sweden"]},{"id":"q05","d":"E","q":"Which countries prefer a consensus-based approach to decision-making?","o":["Some Middle Eastern countries","Mexico and Brazil","Germany and Switzerland","Scandinavian countries like Sweden"]},{"id":"q06","d":"E","q":"Erin Meyer is an expert on ______.","o":["the history of clocks","fashion and dress codes","cross-cultural management","financial firms in London"]},{"id":"q07","d":"E","q":"In Mexico, what communicates respect, especially during first introductions?","o":["Arriving very early","Using formal titles","Wearing sneakers","Giving direct criticism"]},{"id":"q08","d":"E","q":"According to the passage, communication in Japan and many other Asian countries is often ______.","o":["much more indirect","clear and explicit","blunt and direct","loud and fast"]},{"id":"q09","d":"E","q":"In which countries is feedback given directly and bluntly?","o":["The United States and Mexico","Japan and Korea","Brazil and Mexico","The Netherlands or Israel"]},{"id":"q10","d":"E","q":"In Mexico, Brazil, and the Middle East, colleagues might spend significant time ______ before getting down to business.","o":["writing reports","checking schedules","socializing","changing clothes"]},{"id":"q11","d":"M","q":"What is the main idea of the passage?","o":["German workers are the most professional people in the world.","Ideas about professionalism differ across cultures, so we should adapt to the people we work with.","Being late for a meeting is always unprofessional.","Dress codes are the most important difference between workplaces."]},{"id":"q12","d":"M","q":"According to the passage, arriving on time in Germany and Switzerland shows ______.","o":["reliability and respect for others","a weak personal relationship","a polychronic attitude","indirect communication"]},{"id":"q13","d":"M","q":"Why might workplaces in Brazil and Mexico be flexible about meeting times?","o":["Employees there have too many meetings every day.","Managers there do not care about their work.","The law in those countries requires flexible meetings.","Building personal relationships often matters more than following a rigid clock."]},{"id":"q14","d":"M","q":"In direct cultures, how is open disagreement during a meeting usually seen?","o":["As a personal attack","As a threat to group harmony","As a productive debate","As a sign of disrespect"]},{"id":"q15","d":"M","q":"\"People prefer to read between the lines to understand the true meaning.\" What does \"read between the lines\" mean?","o":["Read the text very slowly","Understand the hidden or unspoken meaning","Skip the difficult parts","Read every line out loud"]},{"id":"q16","d":"M","q":"What does the word \"polychronic\" describe?","o":["People who see time as flexible and interconnected","People who always follow strict schedules","People who arrive early to every meeting","People who dislike working in teams"]},{"id":"q17","d":"M","q":"Why is criticism usually expressed very carefully in many Latin American workplaces?","o":["Because criticism is not allowed by law","To finish meetings more quickly","Because managers there are very blunt","To protect valuable relationships"]},{"id":"q18","d":"M","q":"Which statement about some Japanese workplaces is TRUE according to the passage?","o":["Employees are encouraged to talk confidently about personal accomplishments.","Decisions are always made by voting like in Sweden.","Group success, modesty, and harmony are valued over individual pride.","Feedback is given directly and bluntly."]},{"id":"q19","d":"M","q":"\"Building personal relationships often takes priority over following a rigid clock.\" The word \"rigid\" is closest in meaning to ______.","o":["broken","strict and not flexible","expensive","relaxed and easy"]},{"id":"q20","d":"M","q":"According to the passage, what is TRUE about some German workplaces?","o":["They keep clear boundaries between work and private life.","Colleagues spend a long time socializing before business.","Communication is usually very indirect.","Managers hide criticism between two compliments."]},{"id":"q21","d":"H","q":"In the first paragraph, \"These invisible differences\" refers to ______.","o":["differences in salary between countries","differences between company logos","differences in the languages people speak","different cultural expectations about time, communication, and teamwork"]},{"id":"q22","d":"H","q":"A German manager works with a team in Brazil. Based on the passage, what is the most likely misunderstanding?","o":["The manager and the team will have exactly the same view of time.","The team will think the manager is too relaxed about schedules.","The manager may see flexible meeting times as unreliable, while the team sees them as normal and relationship-focused.","The manager will use the sandwich method and confuse the team."]},{"id":"q23","d":"H","q":"Why does the author mention \"industries, specific companies, different generations, and individual personalities\"?","o":["To prove that each country has only one workplace culture","To show that workplace culture inside one country is not the same everywhere","To list the best industries to work in","To argue that culture is not important at work"]},{"id":"q24","d":"H","q":"What is the author’s attitude toward cultural patterns?","o":["They are useful guides, but not fixed rules.","They are unbreakable rules everyone must follow.","They are useless and should be ignored.","They only matter in Germany and Japan."]},{"id":"q25","d":"H","q":"\"What looks inefficient to one colleague might seem completely respectful to another.\" This sentence suggests that ______.","o":["being efficient is the most important workplace value","respect always means arriving on time","colleagues should never work with people from other cultures","the same behavior can be judged differently in different cultures"]},{"id":"q26","d":"H","q":"\"A manager will state exactly what went wrong without trying to soften the blow.\" What does \"soften the blow\" mean?","o":["Hit something harder","End the meeting early","Make bad news less painful to hear","Hide the mistake forever"]},{"id":"q27","d":"H","q":"Which pair shows the STRONGEST contrast described in the passage?","o":["Punctuality in Germany vs. punctuality in Switzerland","A Dutch manager giving blunt feedback vs. an American manager using the sandwich method","Modesty in Japan vs. team harmony in Japan","T-shirts in Silicon Valley vs. sneakers in Silicon Valley"]},{"id":"q28","d":"H","q":"Which advice would the author most likely give to someone starting an international job?","o":["Observe carefully, listen actively, ask questions, and discuss expectations.","Always follow the workplace rules of your own country.","Avoid working with colleagues from different cultures.","Always use the sandwich method when giving feedback."]},{"id":"q29","d":"H","q":"Which is the best alternative title for this passage?","o":["Why Germans Are Never Late","How to Dress for a Job in Silicon Valley","The History of Business Meetings","Same Job, Different Rules: Professionalism Around the World"]},{"id":"q30","d":"H","q":"In a meeting in Japan, a colleague stays silent after you share your idea. Based on the passage, what is the best way to understand this?","o":["Silence always means the colleague fully agrees.","The colleague is being rude on purpose.","The silence may carry an unspoken message, so you should check carefully instead of assuming agreement.","The colleague did not listen to your idea at all."]}];
+const PASSAGE = ["Imagine arriving five minutes late for a meeting. Does that make you unprofessional? The answer may depend on where you are in the world. Professionalism is often treated as a universal standard, but expectations about time, communication, and teamwork vary deeply across cultures. These invisible differences can easily lead to misunderstandings.", "In countries like Germany and Switzerland, punctuality is taken very seriously. Arriving on time shows reliability and respect for others, and business meetings tend to follow strict schedules. In contrast, workplaces in Brazil and Mexico may offer more flexibility around meeting times. Building personal relationships often takes priority over following a rigid clock.", "American anthropologist Edward T. Hall studied these cultural attitudes toward time. He described people who see time as flexible and interconnected as \"polychronic.\" Hall observed that polychronic people seldom experience time as wasted. Therefore, what looks inefficient to one colleague might seem completely respectful to another.", "Communication styles are another major area of cultural difference. Workplaces in the United States and Germany often value clear, direct, and explicit communication. In these direct cultures, colleagues may openly disagree during a meeting. This is seen as a productive debate, without intending any personal attack.", "However, in Japan and many other Asian countries, communication is often much more indirect. Tone of voice, silence, and context carry important, unspoken messages. In these indirect cultures, direct disagreement can sometimes be seen as a threat to group harmony. People prefer to read between the lines to understand the true meaning. In many Latin American workplaces, communication is expected to be warm and personal. Criticism is usually expressed very carefully to protect valuable relationships.", "Dress codes and workplace formality also shift drastically across borders. For example, a tech company in Silicon Valley might welcome t-shirts and sneakers. Meanwhile, traditional financial firms in London or Tokyo might still expect formal business suits. In Mexico, using formal titles communicates respect, especially during first introductions.", "Ideas about achievement and motivation also differ wildly. Many American workplaces encourage employees to show individual initiative and speak confidently about personal accomplishments. On the other hand, in some Japanese workplaces, greater importance is traditionally given to group success. Consensus, modesty, and team harmony are valued over individual pride.", "Decision-making processes highlight another cultural gap. In some Middle Eastern and Asian businesses, decisions are made rapidly at the very top of the hierarchy. In contrast, Scandinavian countries like Sweden prefer a consensus-based approach. Everyone’s opinion is heard, which takes longer but ensures team agreement before moving forward.", "The way managers give feedback can also cause confusion. In the United States, managers often use the \"sandwich method,\" hiding criticism between two positive compliments. In countries like the Netherlands or Israel, feedback is given directly and bluntly. A manager will state exactly what went wrong without trying to soften the blow.", "When it comes to teamwork, trust is built differently. In Mexico, Brazil, and the Middle East, colleagues might spend significant time socializing before getting down to business. Some German workplaces operate differently, combining individual responsibility with structured cooperation. They maintain clear, professional boundaries between work and private life.", "Of course, no single country has a uniform workplace culture. Industries, specific companies, different generations, and individual personalities all play a huge role. Because of this, cultural patterns should be viewed as useful guides rather than fixed, unbreakable rules. We must adapt our behavior to the specific people we work with.", "Erin Meyer, an expert on cross-cultural management, encourages professionals to observe carefully. We must actively listen to others when working across diverse cultures. By staying open-minded, asking clarifying questions, and openly discussing expectations, international colleagues can build deep trust and work together more effectively."];
+// ===================== RC CORE (shared: web page offline mode + Code.gs) =====================
+var RC_META = [{"id":"q01","d":"E","a":3},{"id":"q02","d":"E","a":2},{"id":"q03","d":"E","a":1},{"id":"q04","d":"E","a":0},{"id":"q05","d":"E","a":3},{"id":"q06","d":"E","a":2},{"id":"q07","d":"E","a":1},{"id":"q08","d":"E","a":0},{"id":"q09","d":"E","a":3},{"id":"q10","d":"E","a":2},{"id":"q11","d":"M","a":1},{"id":"q12","d":"M","a":0},{"id":"q13","d":"M","a":3},{"id":"q14","d":"M","a":2},{"id":"q15","d":"M","a":1},{"id":"q16","d":"M","a":0},{"id":"q17","d":"M","a":3},{"id":"q18","d":"M","a":2},{"id":"q19","d":"M","a":1},{"id":"q20","d":"M","a":0},{"id":"q21","d":"H","a":3},{"id":"q22","d":"H","a":2},{"id":"q23","d":"H","a":1},{"id":"q24","d":"H","a":0},{"id":"q25","d":"H","a":3},{"id":"q26","d":"H","a":2},{"id":"q27","d":"H","a":1},{"id":"q28","d":"H","a":0},{"id":"q29","d":"H","a":3},{"id":"q30","d":"H","a":2}];
+var RC_TOTAL = RC_META.length;
+var RC_KEYMAP = {};
+RC_META.forEach(function (m) { RC_KEYMAP[m.id] = m.a; });
+
+var RC_DEFAULTS = {
+  passScore: 15, timeLimitMin: 60, antiCheat: true, faceScan: true, maxViolations: 0,
+  retakeCount: 30, retakeMinScore: 0, retakeTimeLimitMin: 60,
+  examOpen: true, retakeOpen: true, heroImage: '', adminPin: '7846'
+};
+
+function rcBool(v, d) {
+  if (v === true || v === false) return v;
+  if (v === undefined || v === null || v === '') return d;
+  var s = String(v).trim().toLowerCase();
+  return s === 'true' || s === '1' || s === 'yes' || s === 'on' || s === 'เปิด';
+}
+function rcNum(v, d, min, max) {
+  var n = Number(v);
+  if (v === '' || v === null || v === undefined || !isFinite(n)) n = d;
+  n = Math.round(n);
+  if (n < min) n = min;
+  if (n > max) n = max;
+  return n;
+}
+// Accepts https image links; turns Google Drive share links into direct image links
+function rcImgUrl(v) {
+  var s = String(v === undefined || v === null ? '' : v).trim();
+  if (!s || s.length > 2000 || !/^https:\/\//i.test(s)) return '';
+  var m = s.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);
+  if (m) return 'https://lh3.googleusercontent.com/d/' + m[1];
+  return s;
+}
+function rcSettings(raw) {
+  raw = raw || {};
+  var D = RC_DEFAULTS;
+  var s = {
+    passScore: rcNum(raw.passScore, D.passScore, 0, RC_TOTAL),
+    timeLimitMin: rcNum(raw.timeLimitMin, D.timeLimitMin, 0, 300),
+    antiCheat: rcBool(raw.antiCheat, D.antiCheat),
+    faceScan: rcBool(raw.faceScan, D.faceScan),
+    maxViolations: rcNum(raw.maxViolations, D.maxViolations, 0, 99),
+    retakeCount: rcNum(raw.retakeCount, D.retakeCount, 1, RC_TOTAL),
+    retakeMinScore: rcNum(raw.retakeMinScore, D.retakeMinScore, 0, RC_TOTAL),
+    retakeTimeLimitMin: rcNum(raw.retakeTimeLimitMin, D.retakeTimeLimitMin, 0, 300),
+    examOpen: rcBool(raw.examOpen, D.examOpen),
+    retakeOpen: rcBool(raw.retakeOpen, D.retakeOpen),
+    heroImage: rcImgUrl(raw.heroImage),
+    adminPin: (raw.adminPin !== undefined && raw.adminPin !== null && String(raw.adminPin).trim() !== '')
+      ? String(raw.adminPin).trim() : D.adminPin
+  };
+  if (s.retakeMinScore > s.retakeCount) s.retakeMinScore = s.retakeCount;
+  return s;
+}
+function rcPublic(S) {
+  var o = {};
+  for (var k in S) if (k !== 'adminPin') o[k] = S[k];
+  o.total = RC_TOTAL;
+  return o;
+}
+function rcNormClass(c) {
+  var s = String(c === undefined || c === null ? '' : c).replace(/\s+/g, '');
+  s = s.replace(/^ม\.?/, '').replace(/^m\.?/i, '');
+  return s;
+}
+function rcKey(cls, no) { return rcNormClass(cls) + '#' + Number(no); }
+
+// ---------- seeded randomness (identical on client & server) ----------
+function rcHashSeed(str) {
+  var h = 1779033703 ^ str.length;
+  for (var i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  h = Math.imul(h ^ (h >>> 16), 2246822507);
+  h = Math.imul(h ^ (h >>> 13), 3266489909);
+  return (h ^= h >>> 16) >>> 0;
+}
+function rcRng(str) {
+  var a = rcHashSeed(String(str));
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function rcShuffle(arr, rnd) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(rnd() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+// Mix easy / medium / hard evenly, different order for every student & round
+function rcPick(seed, n) {
+  var r = rcRng(seed);
+  var pools = { E: [], M: [], H: [] };
+  RC_META.forEach(function (m) { pools[m.d].push(m.id); });
+  var P = { E: rcShuffle(pools.E, r), M: rcShuffle(pools.M, r), H: rcShuffle(pools.H, r) };
+  var order = rcShuffle(['E', 'M', 'H'], r);
+  var out = [], i = 0;
+  while (out.length < RC_META.length) {
+    for (var k = 0; k < order.length; k++) { var d = order[k]; if (P[d].length > i) out.push(P[d][i]); }
+    i++;
+  }
+  n = Math.max(1, Math.min(Number(n) || RC_TOTAL, out.length));
+  return out.slice(0, n);
+}
+function rcExamIds(key) { return rcPick(key + '|MAIN', RC_TOTAL); }
+function rcRetakeIds(key, attempt, n) { return rcPick(key + '|R' + attempt, n); }
+
+function rcCleanAnswers(ans, ids) {
+  var out = {};
+  if (!ans || typeof ans !== 'object') return out;
+  ids.forEach(function (id) {
+    var v = ans[id];
+    if (v === undefined || v === null || v === '') return;
+    v = Number(v);
+    if (v === 0 || v === 1 || v === 2 || v === 3) out[id] = v;
+  });
+  return out;
+}
+function rcGrade(ans, ids) {
+  var s = 0;
+  ids.forEach(function (id) { if (ans[id] === RC_KEYMAP[id]) s++; });
+  return s;
+}
+function rcCode(key, score, t) {
+  var h = rcHashSeed('RCPRO|' + key + '|' + score + '|' + t).toString(36).toUpperCase();
+  while (h.length < 6) h = '0' + h;
+  return h.slice(-6);
+}
+
+function rcNewRow(st) {
+  return {
+    key: rcKey(st.cls, st.no), cls: rcNormClass(st.cls), no: Number(st.no), first: st.first, last: st.last,
+    deviceId: '', boundAt: 0, status: 'none', score: 0, total: RC_TOTAL, startEpoch: 0, finishEpoch: 0,
+    answers: {}, violations: 0, vlog: [], retakeDone: 0, retakeAttempts: 0, retakeActive: 0, retakeStart: 0,
+    retakeScores: [], code: '', hasPhoto: false, hasRetakePhoto: false, updatedAt: 0
+  };
+}
+
+function rcState(row, S, now) {
+  var done = row.status === 'done';
+  var passed = done && row.score >= S.passScore;
+  var req = done && !passed ? (S.passScore - row.score) : 0;
+  return {
+    key: row.key, cls: row.cls, no: row.no, first: row.first, last: row.last,
+    status: row.status, score: done ? row.score : null, total: row.total || RC_TOTAL,
+    startEpoch: row.startEpoch, finishEpoch: row.finishEpoch,
+    answers: row.status === 'in_progress' ? (row.answers || {}) : {},
+    passScore: S.passScore, passed: passed, retakeRequired: req, retakeDone: row.retakeDone || 0,
+    retakeComplete: req > 0 && (row.retakeDone || 0) >= req,
+    retakeActive: row.retakeActive || 0, retakeStart: row.retakeStart || 0,
+    retakeAttempts: row.retakeAttempts || 0, retakeScores: row.retakeScores || [],
+    code: row.code || '', violations: row.violations || 0,
+    serverNow: now, settings: rcPublic(S)
+  };
+}
+
+function rcAdminRow(row, S, now) {
+  var st = rcState(row, S, now);
+  st.deviceBound = !!row.deviceId;
+  st.deviceShort = row.deviceId ? String(row.deviceId).slice(-5) : '';
+  st.boundAt = row.boundAt || 0;
+  st.answered = row.status === 'in_progress' ? Object.keys(row.answers || {}).length : 0;
+  st.vlog = (row.vlog || []).slice(-15);
+  st.hasPhoto = !!row.hasPhoto; st.hasRetakePhoto = !!row.hasRetakePhoto;
+  st.updatedAt = row.updatedAt || 0;
+  delete st.answers; delete st.settings;
+  return st;
+}
+
+function rcErr(code, extra) {
+  var o = { ok: false, error: code };
+  if (extra) for (var k in extra) o[k] = extra[k];
+  return o;
+}
+
+var RC_PHOTO_MAX = 48000;
+
+/**
+ * ctx: { now(), settings(), saveSettings(obj), roster() -> [{cls,no,first,last}],
+ *        getRow(key) -> row|null, putRow(row), getPhoto(key) -> {photo, retakePhoto} }
+ */
+function rcHandle(action, p, ctx) {
+  p = p || {};
+  var S = rcSettings(ctx.settings());
+  var now = ctx.now();
+
+  if (action === 'roster') return { ok: true, roster: ctx.roster(), settings: rcPublic(S), serverNow: now };
+
+  // ---------------- admin ----------------
+  if (String(action).indexOf('admin') === 0) {
+    if (String(p.pin === undefined ? '' : p.pin).trim() !== String(S.adminPin)) return rcErr('bad_pin');
+    var roster = ctx.roster();
+    var findSt = function (k) { for (var i = 0; i < roster.length; i++) if (rcKey(roster[i].cls, roster[i].no) === k) return roster[i]; return null; };
+    switch (action) {
+      case 'adminCheck': return { ok: true };
+      case 'adminList':
+        var rows = roster.map(function (st) { return rcAdminRow(ctx.getRow(rcKey(st.cls, st.no)) || rcNewRow(st), S, now); });
+        var pub = rcPublic(S);
+        return { ok: true, rows: rows, settings: pub, serverNow: now };
+      case 'adminSettings':
+        var inc = p.settings || {};
+        var raw = {};
+        for (var k in S) raw[k] = S[k];
+        ['passScore', 'timeLimitMin', 'antiCheat', 'faceScan', 'maxViolations', 'retakeCount', 'retakeMinScore',
+          'retakeTimeLimitMin', 'examOpen', 'retakeOpen', 'heroImage'].forEach(function (k2) { if (inc[k2] !== undefined) raw[k2] = inc[k2]; });
+        if (inc.newPin !== undefined && String(inc.newPin).trim() !== '') {
+          var np = String(inc.newPin).trim();
+          if (!/^\d{4,8}$/.test(np)) return rcErr('bad_new_pin');
+          raw.adminPin = np;
+        }
+        var S2 = rcSettings(raw);
+        ctx.saveSettings(S2);
+        return { ok: true, settings: rcPublic(S2), pinChanged: S2.adminPin !== S.adminPin };
+      case 'adminRelease':
+      case 'adminReset':
+        var st0 = findSt(String(p.key || ''));
+        if (!st0) return rcErr('not_in_roster');
+        var row0 = ctx.getRow(st0 && rcKey(st0.cls, st0.no));
+        if (!row0) return { ok: true, row: rcAdminRow(rcNewRow(st0), S, now) };
+        if (action === 'adminRelease') { row0.deviceId = ''; row0.boundAt = 0; }
+        else if (p.what === 'retake') {
+          row0.retakeDone = 0; row0.retakeAttempts = 0; row0.retakeActive = 0; row0.retakeStart = 0;
+          row0.retakeScores = []; row0.retakePhoto = ''; row0.hasRetakePhoto = false;
+        } else {
+          var keepDev = row0.deviceId, keepBound = row0.boundAt;
+          row0 = rcNewRow(st0); row0.deviceId = keepDev; row0.boundAt = keepBound;
+          row0.photo = ''; row0.retakePhoto = '';
+        }
+        row0.updatedAt = now;
+        ctx.putRow(row0);
+        return { ok: true };
+      case 'adminPhoto':
+        var ph = ctx.getPhoto(String(p.key || '')) || {};
+        return { ok: true, photo: ph.photo || '', retakePhoto: ph.retakePhoto || '' };
+    }
+    return rcErr('unknown_action');
+  }
+
+  // ---------------- student ----------------
+  var key = String(p.key || ''), dev = String(p.deviceId || '');
+  if (!key || !dev) return rcErr('bad_request');
+  var rs = ctx.roster(), st = null;
+  for (var i = 0; i < rs.length; i++) if (rcKey(rs[i].cls, rs[i].no) === key) { st = rs[i]; break; }
+  if (!st) return rcErr('not_in_roster');
+
+  var row = ctx.getRow(key);
+  if (!row) {
+    if (action !== 'login') return rcErr('not_logged_in');
+    row = rcNewRow(st);
+  }
+  if (row.deviceId && row.deviceId !== dev) return rcErr('device_locked');
+  if (!row.deviceId) {
+    if (action !== 'login') return rcErr('not_logged_in');
+    row.deviceId = dev; row.boundAt = now;
+  }
+  row.first = st.first; row.last = st.last;
+  var extra = {};
+  var photo = (typeof p.photo === 'string' && p.photo.indexOf('data:image') === 0 && p.photo.length <= RC_PHOTO_MAX) ? p.photo : '';
+
+  switch (action) {
+    case 'login': break;
+
+    case 'start':
+      if (row.status === 'done') return rcErr('already_done', { state: rcState(row, S, now) });
+      if (row.status !== 'in_progress') {
+        if (!S.examOpen) return rcErr('exam_closed');
+        row.status = 'in_progress'; row.startEpoch = now; row.answers = {}; row.total = RC_TOTAL;
+      }
+      if (photo && !row.hasPhoto) { row.photo = photo; row.hasPhoto = true; }
+      break;
+
+    case 'save':
+      if (row.status !== 'in_progress') return { ok: true, state: rcState(row, S, now) };
+      row.answers = rcCleanAnswers(p.answers, rcExamIds(key));
+      break;
+
+    case 'finish':
+      if (row.status === 'done') return { ok: true, already: true, state: rcState(row, S, now) };
+      if (row.status !== 'in_progress') return rcErr('not_started');
+      var ids = rcExamIds(key);
+      var merged = {}, a1 = row.answers || {}, a2 = p.answers || {}, kk;
+      for (kk in a1) merged[kk] = a1[kk];
+      for (kk in a2) merged[kk] = a2[kk];
+      row.answers = rcCleanAnswers(merged, ids);
+      row.score = rcGrade(row.answers, ids);
+      row.total = ids.length; row.status = 'done'; row.finishEpoch = now;
+      row.code = rcCode(key, row.score, now);
+      break;
+
+    case 'violation':
+      row.violations = (row.violations || 0) + 1;
+      row.vlog = (row.vlog || []).concat([{ t: now, k: String(p.kind || '').slice(0, 30), m: String(p.mode || '').slice(0, 10) }]).slice(-40);
+      break;
+
+    case 'retakeStart':
+      var s0 = rcState(row, S, now);
+      if (s0.status !== 'done') return rcErr('not_done', { state: s0 });
+      if (s0.passed) return rcErr('already_passed', { state: s0 });
+      if (s0.retakeComplete) return rcErr('retake_complete', { state: s0 });
+      if (!row.retakeActive) {
+        if (!S.retakeOpen) return rcErr('retake_closed', { state: s0 });
+        row.retakeAttempts = (row.retakeAttempts || 0) + 1;
+        row.retakeActive = row.retakeAttempts;
+        row.retakeStart = now;
+        row.retakeCountActive = S.retakeCount;
+      }
+      if (photo) { row.retakePhoto = photo; row.hasRetakePhoto = true; }
+      extra.round = row.retakeActive;
+      extra.count = row.retakeCountActive || S.retakeCount;
+      break;
+
+    case 'retakeFinish':
+      if (!row.retakeActive || Number(p.round) !== row.retakeActive) return rcErr('round_mismatch', { state: rcState(row, S, now) });
+      var n = row.retakeCountActive || S.retakeCount;
+      var rids = rcRetakeIds(key, row.retakeActive, n);
+      var rans = rcCleanAnswers(p.answers, rids);
+      var rscore = rcGrade(rans, rids);
+      var counted = rscore >= Math.min(S.retakeMinScore, rids.length);
+      if (counted) row.retakeDone = (row.retakeDone || 0) + 1;
+      row.retakeScores = (row.retakeScores || []).concat([{ r: row.retakeActive, s: rscore, n: rids.length, c: counted, t: now }]).slice(-60);
+      row.retakeActive = 0; row.retakeStart = 0; row.retakeCountActive = 0;
+      extra.roundScore = rscore; extra.roundTotal = rids.length; extra.counted = counted;
+      extra.roundCode = rcCode(key + '|R', rscore, now);
+      break;
+
+    default:
+      return rcErr('unknown_action');
+  }
+  row.updatedAt = now;
+  ctx.putRow(row);
+  var out = { ok: true, state: rcState(row, S, now) };
+  for (var e in extra) out[e] = extra[e];
+  if (out.state.retakeActive) out.state.retakeCountActive = row.retakeCountActive || S.retakeCount;
+  return out;
+}
+// =================== END RC CORE ===================
+
+
+const QMAP = {}; QUESTIONS.forEach(q => QMAP[q.id] = q);
+const DIFF_TH = { E: 'ง่าย', M: 'ปานกลาง', H: 'ยาก' };
+const DEMO_ROSTER = [];
+['6/1', '6/2', '6/3'].forEach(c => { for (let i = 1; i <= 3; i++) DEMO_ROSTER.push({ cls: c, no: i, first: 'นักเรียนทดลอง' + i, last: 'ห้อง ' + c }); });
+
+/* ---------------- helpers ---------------- */
+const $ = s => document.querySelector(s);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (e) { } }
+function thTime(t) { try { return new Date(t).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok', dateStyle: 'medium', timeStyle: 'short' }); } catch (e) { return new Date(t).toLocaleString(); } }
+function initial(n) { return (String(n || '?').trim()[0] || '?'); }
+function clsLabel(c) { return 'ม.' + c; }
+
+function toast(msg, type) {
+  const d = document.createElement('div');
+  d.className = 'toast ' + (type || '');
+  d.textContent = msg;
+  $('#toasts').appendChild(d);
+  setTimeout(() => { d.style.transition = 'opacity .4s'; d.style.opacity = '0'; setTimeout(() => d.remove(), 420); }, 3200);
+}
+function busy(on, text) { $('#busyText').textContent = text || 'กำลังโหลด…'; $('#busy').classList.toggle('open', !!on); }
+
+let modalResolve = null;
+function modal(o) {
+  return new Promise(res => {
+    if (modalResolve) modalResolve(null);
+    modalResolve = res;
+    const card = $('#modalCard');
+    card.innerHTML = '<div class="mi">' + (o.icon || '💬') + '</div><h3></h3><div class="mb"></div><div class="mbtns"></div>';
+    card.querySelector('h3').textContent = o.title || '';
+    card.querySelector('.mb').innerHTML = o.html || '';
+    const box = card.querySelector('.mbtns');
+    (o.buttons || [{ text: 'ตกลง', value: true }]).forEach(b => {
+      const el = document.createElement('button');
+      el.className = 'btn ' + (b.cls || '');
+      el.textContent = b.text;
+      el.onclick = () => { $('#modal').classList.remove('open'); const r = modalResolve; modalResolve = null; if (r) r(b.value); };
+      box.appendChild(el);
+    });
+    $('#modal').classList.add('open');
+  });
+}
+
+const ERR_TH = {
+  device_locked: 'ชื่อนี้ถูกใช้งานบนอุปกรณ์อื่นแล้ว 🔒<br>ถ้าเป็นชื่อของเธอจริง ให้แจ้ง <b>ครูโอ๊ต</b> เพื่อปลดล็อกเครื่อง',
+  not_in_roster: 'ไม่พบชื่อนี้ในรายชื่อ กรุณาแจ้งครูโอ๊ต',
+  not_logged_in: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+  network: 'เชื่อมต่ออินเทอร์เน็ตไม่ได้ 📶 ลองใหม่อีกครั้ง',
+  busy: 'ระบบมีผู้ใช้งานจำนวนมาก กรุณาลองใหม่อีกครั้ง',
+  exam_closed: 'ครูยังไม่เปิดให้เริ่มสอบ ⏳',
+  retake_closed: 'ครูยังไม่เปิดให้สอบแก้ตัว ⏳',
+  already_done: 'เธอส่งข้อสอบไปแล้ว (สอบได้ครั้งเดียว)',
+  not_done: 'ต้องสอบจริงให้เสร็จก่อน จึงจะสอบแก้ตัวได้',
+  already_passed: 'เธอสอบผ่านแล้ว ไม่ต้องสอบแก้ตัว 🎉',
+  retake_complete: 'เธอสอบแก้ตัวครบตามจำนวนแล้ว 🎉',
+  round_mismatch: 'รอบสอบแก้ตัวไม่ตรงกัน กรุณาเริ่มรอบใหม่',
+  not_started: 'ยังไม่ได้เริ่มสอบ',
+  bad_pin: 'รหัส PIN ไม่ถูกต้อง',
+  bad_new_pin: 'PIN ใหม่ต้องเป็นตัวเลข 4–8 หลัก',
+  server: 'เซิร์ฟเวอร์ขัดข้อง กรุณาลองใหม่',
+  bad_request: 'ข้อมูลไม่ครบ กรุณาเข้าสู่ระบบใหม่'
+};
+const errText = r => ERR_TH[r && r.error] || ('เกิดข้อผิดพลาด: ' + esc((r && (r.error + ' ' + (r.msg || ''))) || 'unknown'));
+
+/* ---------------- device id ---------------- */
+function getDeviceId() {
+  let id = lsGet('rcp_device_id');
+  if (!id) { id = 'D' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); lsSet('rcp_device_id', id); }
+  return id;
+}
+const DEVICE_ID = getDeviceId();
+
+/* ---------------- backend ---------------- */
+const LOCAL_CTX = (function () {
+  const K = 'rcp_local_db_v1';
+  const db = () => { try { return JSON.parse(lsGet(K)) || { rows: {}, photos: {}, settings: {} }; } catch (e) { return { rows: {}, photos: {}, settings: {} }; } };
+  const save = d => lsSet(K, JSON.stringify(d));
+  return {
+    now: () => Date.now(),
+    settings: () => db().settings,
+    saveSettings: o => { const d = db(); d.settings = Object.assign({}, d.settings, o); save(d); },
+    roster: () => DEMO_ROSTER,
+    getRow: k => { const r = db().rows[k]; return r ? JSON.parse(JSON.stringify(r)) : null; },
+    putRow: o => {
+      const d = db(); const p = o.photo, rp = o.retakePhoto;
+      delete o.photo; delete o.retakePhoto;
+      d.rows[o.key] = o;
+      if (p !== undefined || rp !== undefined) {
+        d.photos[o.key] = d.photos[o.key] || {};
+        if (p !== undefined) d.photos[o.key].photo = p;
+        if (rp !== undefined) d.photos[o.key].retakePhoto = rp;
+      }
+      save(d);
+    },
+    getPhoto: k => db().photos[k] || {}
+  };
+})();
+if (!CONFIG.GAS_URL) { const S0 = LOCAL_CTX.settings(); if (!S0.adminPin) LOCAL_CTX.saveSettings({ adminPin: CONFIG.ADMIN_PIN_OFFLINE }); }
+
+async function api(action, payload, opts) {
+  const body = Object.assign({ action: action }, payload || {});
+  const retries = (opts && opts.retries) || 0;
+  if (!CONFIG.GAS_URL) { await sleep(120); try { return rcHandle(action, JSON.parse(JSON.stringify(body)), LOCAL_CTX); } catch (e) { return { ok: false, error: 'server', msg: String(e) }; } }
+  let last = null;
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const t = ctl ? setTimeout(() => ctl.abort(), 30000) : null;
+      const r = await fetch(CONFIG.GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), signal: ctl ? ctl.signal : undefined, redirect: 'follow' });
+      if (t) clearTimeout(t);
+      const j = await r.json();
+      if (j && j.error === 'busy' && i < retries) { await sleep(900 * (i + 1)); continue; }
+      return j;
+    } catch (e) { last = e; if (i < retries) await sleep(900 * (i + 1)); }
+  }
+  return { ok: false, error: 'network', msg: String(last) };
+}
+
+/* ---------------- global state ---------------- */
+const S = {
+  roster: [], settings: rcPublic(rcSettings({})), student: null, state: null, clockOffset: 0,
+  mode: 'exam', round: 0, qids: [], answers: {}, optOrder: {}, idx: 0, startEpoch: 0, limitMin: 0,
+  timerId: null, finishing: false, violations: 0, storeKey: '', saveTimer: null, photo: '', lastRound: null, inExam: false
+};
+function applyState(st) {
+  if (!st) return;
+  S.state = st;
+  if (st.settings) { S.settings = st.settings; applyHero(S.settings.heroImage); }
+  if (st.serverNow) S.clockOffset = st.serverNow - Date.now();
+}
+const nowServer = () => Date.now() + S.clockOffset;
+
+/* ---------------- screens ---------------- */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = $('#sc-' + id);
+  void el.offsetWidth;
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ---------------- background FX ---------------- */
+function startBgFx() {
+  const c = $('#bgfx'); const ctx = c.getContext && c.getContext('2d');
+  if (!ctx) return;
+  let W, H, pts = [];
+  const N = Math.min(70, Math.round(window.innerWidth / 18));
+  function size() { W = c.width = innerWidth * devicePixelRatio; H = c.height = innerHeight * devicePixelRatio; }
+  size(); addEventListener('resize', size);
+  for (let i = 0; i < N; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35 * devicePixelRatio, vy: (Math.random() - .5) * .35 * devicePixelRatio, r: (Math.random() * 1.8 + .6) * devicePixelRatio, h: [158, 195, 255, 45][i % 4] });
+  const D = 140 * devicePixelRatio;
+  (function loop() {
+    if (!document.hidden) {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of pts) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+      }
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i], b = pts[j], dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
+        if (d < D) { ctx.strokeStyle = 'rgba(120,200,255,' + (0.16 * (1 - d / D)) + ')'; ctx.lineWidth = devicePixelRatio * .7; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      for (const p of pts) { ctx.fillStyle = 'hsla(' + p.h + ',90%,70%,.85)'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }
+    }
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ---------------- confetti ---------------- */
+function confetti(ms) {
+  const c = $('#confetti'); const ctx = c.getContext && c.getContext('2d');
+  if (!ctx) return;
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#2ee6a6', '#4cc9ff', '#7c5cff', '#ffd166', '#ff5d8f', '#ffffff'];
+  const ps = [];
+  for (let i = 0; i < 220; i++) ps.push({ x: innerWidth / 2 + (Math.random() - .5) * 200, y: innerHeight * .35, vx: (Math.random() - .5) * 16, vy: -Math.random() * 16 - 4, s: Math.random() * 8 + 4, a: Math.random() * 6, va: (Math.random() - .5) * .3, c: cols[i % cols.length] });
+  const end = performance.now() + (ms || 3200);
+  (function f(t) {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (const p of ps) { p.vy += .35; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); }
+    if (t < end) requestAnimationFrame(f); else ctx.clearRect(0, 0, c.width, c.height);
+  })(performance.now());
+}
+
+/* ---------------- sounds ---------------- */
+let AC_CTX = null;
+function beep(freqs, dur, type) {
+  try {
+    AC_CTX = AC_CTX || new (window.AudioContext || window.webkitAudioContext)();
+    let t = AC_CTX.currentTime;
+    freqs.forEach(f => {
+      const o = AC_CTX.createOscillator(), g = AC_CTX.createGain();
+      o.type = type || 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.18, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g); g.connect(AC_CTX.destination); o.start(t); o.stop(t + dur + .02); t += dur * .8;
+    });
+  } catch (e) { }
+}
+const SFX = { tap: () => beep([660], .08), ok: () => beep([523, 659, 784, 1046], .14), bad: () => beep([220, 160], .25, 'sawtooth'), warn: () => beep([880, 440, 880], .15, 'square') };
+
+/* =====================================================================
+   BOOT
+   ===================================================================== */
+async function boot() {
+  startBgFx();
+  const words = 'Reading Comprehension: What Does "Professional" Mean?'.split(' ');
+  $('#splashTitle').innerHTML = words.map((w, i) => '<span class="w" style="animation-delay:' + (i * 0.12) + 's">' + esc(w) + '</span>').join(' ');
+  const t0 = Date.now();
+  const isAdmin = /[?&]admin=1/.test(location.search);
+  let r = await api('roster', {}, { retries: 2 });
+  while (!r.ok) {
+    $('#splashMsg').textContent = 'เชื่อมต่อระบบไม่สำเร็จ';
+    await modal({ icon: '📶', title: 'เชื่อมต่อไม่ได้', html: errText(r), buttons: [{ text: 'ลองใหม่', value: 1 }] });
+    r = await api('roster', {}, { retries: 2 });
+  }
+  S.roster = r.roster || []; S.settings = r.settings || S.settings;
+  applyHero(S.settings.heroImage);
+  if (r.serverNow) S.clockOffset = r.serverNow - Date.now();
+  buildLogin();
+  const wait = 1900 - (Date.now() - t0);
+  if (wait > 0) await sleep(wait);
+  if (isAdmin) openAdmin(); else show('login');
+}
+
+/* ---------------- hero photo (embedded once, reused) ---------------- */
+const HERO_DEFAULT = $('#heroImg').src;
+let heroApplied = null;
+function setHeroSrc(src) { $('#heroImg').src = src; $('#splashImg').src = src; $('#hhPhoto').style.backgroundImage = 'url("' + String(src).replace(/"/g, '%22') + '")'; }
+// ใช้ลิงก์รูปจากการตั้งค่า ถ้าโหลดไม่ได้จะกลับไปใช้รูปเดิมอัตโนมัติ
+function applyHero(url) {
+  url = url || '';
+  if (url === heroApplied) return;
+  heroApplied = url;
+  if (!url) { setHeroSrc(HERO_DEFAULT); return; }
+  const im = new Image();
+  im.onload = () => { if (heroApplied === url) setHeroSrc(url); };
+  im.onerror = () => { if (heroApplied === url) setHeroSrc(HERO_DEFAULT); };
+  im.src = url;
+}
+setHeroSrc(HERO_DEFAULT);
+
+/* ---------------- photo tilt ---------------- */
+(function () {
+  const st = $('#photoStage'), card = $('#photoCard');
+  if (!st || !window.matchMedia || !matchMedia('(hover:hover)').matches) return;
+  st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; card.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (-y * 12) + 'deg)'; });
+  st.addEventListener('pointerleave', () => { card.style.transform = ''; });
+})();
+
+/* ---------------- login ---------------- */
+let selCls = '', selKey = '';
+function buildLogin() {
+  $('#offlineNote').style.display = CONFIG.GAS_URL ? 'none' : 'block';
+  const classes = Array.from(new Set(S.roster.map(s => s.cls))).sort();
+  const row = $('#clsRow'); row.innerHTML = '';
+  if (!classes.length) { row.innerHTML = '<p class="muted">ครูยังไม่ได้ใส่รายชื่อนักเรียน กรุณาแจ้งครูโอ๊ต</p>'; }
+  classes.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'cls-btn'; b.textContent = clsLabel(c); b.dataset.cls = c;
+    b.onclick = () => { SFX.tap(); selCls = c; selKey = ''; document.querySelectorAll('.cls-btn').forEach(x => x.classList.toggle('on', x === b)); fillNames(); };
+    row.appendChild(b);
+  });
+  const last = lsGet('rcp_last');
+  const st = last && S.roster.find(s => rcKey(s.cls, s.no) === last);
+  if (st) {
+    $('#resumeBox').classList.add('show');
+    $('#resumeAv').textContent = initial(st.first);
+    $('#resumeName').textContent = st.first + ' ' + st.last + ' · ' + clsLabel(st.cls) + ' เลขที่ ' + st.no;
+    $('#resumeBtn').onclick = () => doLogin(last, false);
+  } else $('#resumeBox').classList.remove('show');
+}
+function fillNames() {
+  const sel = $('#nameSel');
+  const list = S.roster.filter(s => s.cls === selCls);
+  sel.innerHTML = '<option value="">— เลือกชื่อ (' + list.length + ' คน) —</option>' + list.map(s => '<option value="' + esc(rcKey(s.cls, s.no)) + '">เลขที่ ' + s.no + '  ' + esc(s.first + ' ' + s.last) + '</option>').join('');
+  sel.disabled = false; $('#whoBox').classList.remove('show'); $('#loginBtn').disabled = true;
+}
+$('#nameSel').addEventListener('change', e => {
+  selKey = e.target.value;
+  const st = S.roster.find(s => rcKey(s.cls, s.no) === selKey);
+  $('#loginBtn').disabled = !st;
+  if (!st) { $('#whoBox').classList.remove('show'); return; }
+  $('#whoAv').textContent = initial(st.first);
+  $('#whoName').textContent = st.first + ' ' + st.last;
+  $('#whoSub').textContent = clsLabel(st.cls) + ' · เลขที่ ' + st.no;
+  $('#whoBox').classList.remove('show'); void $('#whoBox').offsetWidth; $('#whoBox').classList.add('show');
+});
+$('#loginBtn').addEventListener('click', () => { if (selKey) doLogin(selKey, true); });
+
+let loggingIn = false;
+async function doLogin(key, confirmFirst) {
+  if (loggingIn) return;
+  const st = S.roster.find(s => rcKey(s.cls, s.no) === key);
+  if (!st) return;
+  if (confirmFirst) {
+    const ok = await modal({ icon: '🪪', title: 'ยืนยันตัวตน', html: 'ฉันคือ <b>' + esc(st.first + ' ' + st.last) + '</b><br>' + clsLabel(st.cls) + ' เลขที่ ' + st.no + '<br><br><small class="muted">⚠️ เครื่องนี้จะถูกผูกกับชื่อนี้ทันที ถ้าไม่ใช่ชื่อของตัวเอง <b>ห้ามกดยืนยัน</b></small>', buttons: [{ text: 'ยกเลิก', value: false, cls: 'ghost' }, { text: 'ใช่ ฉันเอง ✅', value: true }] });
+    if (!ok) return;
+  }
+  loggingIn = true; busy(true, 'กำลังเข้าสู่ระบบ…');
+  const r = await api('login', { key: key, deviceId: DEVICE_ID }, { retries: 2 });
+  busy(false); loggingIn = false;
+  if (!r.ok) { SFX.bad(); if (r.error === 'device_locked' && lsGet('rcp_last') === key) lsDel('rcp_last'); await modal({ icon: r.error === 'device_locked' ? '🔒' : '⚠️', title: 'เข้าสู่ระบบไม่ได้', html: errText(r) }); buildLogin(); return; }
+  S.student = st; lsSet('rcp_last', key); applyState(r.state);
+  SFX.ok(); renderHome(); show('home');
+}
+
+/* ---------------- home ---------------- */
+function renderHome() {
+  const st = S.state, set = S.settings;
+  $('#homeAv').textContent = initial(st.first);
+  $('#homeName').textContent = st.first + ' ' + st.last;
+  $('#homeSub').textContent = clsLabel(st.cls) + ' · เลขที่ ' + st.no;
+  const eb = $('#examBtn');
+  const lim = set.timeLimitMin ? set.timeLimitMin + ' นาที' : 'ไม่จำกัดเวลา';
+  if (st.status === 'done') {
+    $('#examDesc').innerHTML = 'ส่งข้อสอบแล้ว ได้ <b>' + st.score + '/' + st.total + '</b> คะแนน ' + (st.passed ? '✅ ผ่าน' : '❌ ยังไม่ผ่าน') + '<br>คะแนนผ่าน ' + st.passScore + ' คะแนน';
+    eb.textContent = 'สอบแล้ว ✔'; eb.disabled = true;
+  } else if (st.status === 'in_progress') {
+    $('#examDesc').innerHTML = 'เธอยังทำข้อสอบค้างอยู่ กดเพื่อทำต่อ<br>เวลา ' + lim + ' · ผ่าน ' + st.passScore + '/' + RC_TOTAL;
+    eb.textContent = 'ทำต่อ ➜'; eb.disabled = false;
+  } else {
+    $('#examDesc').innerHTML = '30 ข้อ · ง่าย/กลาง/ยาก ปนกัน<br>เวลา ' + lim + ' · คะแนนผ่าน ' + st.passScore + ' · <b>สอบได้ 1 ครั้ง</b>';
+    eb.textContent = set.examOpen ? 'เริ่มทำข้อสอบ' : 'ครูยังไม่เปิดสอบ ⏳'; eb.disabled = !set.examOpen;
+  }
+  const rc = $('#retakeCard'), rb = $('#retakeBtn');
+  if (st.status === 'done' && !st.passed) {
+    rc.style.display = '';
+    const req = st.retakeRequired, done = Math.min(st.retakeDone, req);
+    let dots = ''; for (let i = 0; i < req; i++) dots += '<i class="' + (i < done ? 'ok' : '') + '"></i>';
+    const minTxt = set.retakeMinScore > 0 ? ' (ต้องได้อย่างน้อย ' + set.retakeMinScore + '/' + set.retakeCount + ' จึงนับ)' : '';
+    $('#retakeInfo').innerHTML = '<p>ขาดอีก <b>' + req + '</b> คะแนน → ต้องสอบแก้ตัว <b>' + req + ' ครั้ง</b>' + minTxt + '</p><div class="stat-line"><span class="chip">✅ ทำแล้ว ' + done + '/' + req + '</span><span class="chip">📄 ' + set.retakeCount + ' ข้อ/รอบ</span></div><div class="prog-dots">' + dots + '</div>';
+    if (st.retakeComplete) { rb.textContent = 'แก้ตัวครบแล้ว 🎉'; rb.disabled = true; }
+    else if (st.retakeActive) { rb.textContent = 'ทำรอบที่ค้างต่อ ➜'; rb.disabled = false; }
+    else { rb.textContent = set.retakeOpen ? 'เริ่มสอบแก้ตัว ครั้งที่ ' + (done + 1) : 'ครูยังไม่เปิดแก้ตัว ⏳'; rb.disabled = !set.retakeOpen; }
+  } else rc.style.display = 'none';
+  $('#resCard').style.display = st.status === 'done' ? '' : 'none';
+}
+$('#logoutBtn').onclick = async () => {
+  const ok = await modal({ icon: '👋', title: 'ออกจากระบบ?', html: 'ข้อมูลยังถูกบันทึกไว้ เข้าใหม่ได้ด้วยเครื่องนี้', buttons: [{ text: 'ยกเลิก', value: false, cls: 'ghost' }, { text: 'ออก', value: true, cls: 'rose' }] });
+  if (!ok) return;
+  S.student = null; S.state = null; buildLogin(); show('login');
+};
+$('#examBtn').onclick = () => openRules('exam');
+$('#retakeBtn').onclick = () => openRules('retake');
+$('#viewResBtn').onclick = () => showResult({ kind: 'exam' });
+
+/* ---------------- rules ---------------- */
+function openRules(mode) {
+  S.mode = mode;
+  const set = S.settings, st = S.state;
+  const isR = mode === 'retake';
+  $('#rulesBadge').textContent = isR ? '🔁 สอบแก้ตัว ครั้งที่ ' + (Math.min(st.retakeDone, st.retakeRequired) + 1) + '/' + st.retakeRequired : '📝 สอบจริง';
+  $('#rulesTitle').textContent = isR ? 'ก่อนเริ่มสอบแก้ตัว' : 'ก่อนเริ่มทำข้อสอบ';
+  const lim = isR ? set.retakeTimeLimitMin : set.timeLimitMin;
+  const n = isR ? set.retakeCount : RC_TOTAL;
+  const items = [
+    '📖 อ่านบทความ <b>What Does "Professional" Mean?</b> แล้วตอบคำถาม <b>' + n + ' ข้อ</b> (ง่าย · กลาง · ยาก ปนกัน)',
+    '⏱️ เวลา ' + (lim ? '<b>' + lim + ' นาที</b> — หมดเวลาระบบส่งให้อัตโนมัติ' : 'ไม่จำกัด'),
+    isR ? '🔁 ทำเสร็จ 1 รอบ = นับ 1 ครั้ง' + (set.retakeMinScore > 0 ? ' (ต้องได้อย่างน้อย <b>' + set.retakeMinScore + '</b> คะแนน)' : '') : '✅ คะแนนผ่าน <b>' + set.passScore + '/' + RC_TOTAL + '</b> · สอบจริงได้ <b>ครั้งเดียว</b>',
+    '🔒 ชื่อนี้ใช้ได้กับ <b>เครื่องนี้เครื่องเดียว</b> เท่านั้น'
+  ];
+  if (set.faceScan) items.push('📷 ต้อง <b>สแกนใบหน้า</b> ก่อนเริ่ม (อนุญาตให้ใช้กล้อง)');
+  if (set.antiCheat) items.push('🚨 ระบบป้องกันการทุจริต <b>เปิดอยู่</b>: ห้ามสลับแท็บ/แอป ห้ามคัดลอก ห้ามใช้ตัวแปลภาษา — ทุกครั้งจะถูกบันทึกส่งครู' + (set.maxViolations ? ' (ครบ <b>' + set.maxViolations + '</b> ครั้ง ระบบส่งข้อสอบทันที)' : ''));
+  items.push('📸 ทำเสร็จแล้ว แคปหน้าจอผลสอบส่งครูโอ๊ต');
+  $('#rulesList').innerHTML = items.map(x => '<li>' + x + '</li>').join('');
+  $('#agreeChk').checked = false; $('#rulesGo').disabled = true;
+  show('rules');
+}
+$('#agreeChk').addEventListener('change', e => { $('#rulesGo').disabled = !e.target.checked; });
+$('#rulesBack').onclick = () => { renderHome(); show('home'); };
+let starting = false;
+$('#rulesGo').onclick = async () => {
+  if (starting) return;
+  starting = true; $('#rulesGo').disabled = true;
+  try {
+    let photo = '';
+    if (S.settings.faceScan) { photo = await FaceScan.run(); if (!photo) return; }
+    S.photo = photo || S.photo;
+    if (photo) lsSet('rcp_photo_' + S.state.key, photo);
+    busy(true, 'กำลังเตรียมข้อสอบ…');
+    const r = S.mode === 'exam'
+      ? await api('start', { key: S.state.key, deviceId: DEVICE_ID, photo: photo }, { retries: 2 })
+      : await api('retakeStart', { key: S.state.key, deviceId: DEVICE_ID, photo: photo }, { retries: 2 });
+    busy(false);
+    if (!r.ok) { if (r.state) applyState(r.state); await modal({ icon: '⚠️', title: 'เริ่มไม่ได้', html: errText(r) }); renderHome(); show('home'); return; }
+    applyState(r.state);
+    setupExam(r);
+  } finally { starting = false; $('#rulesGo').disabled = !$('#agreeChk').checked; }
+};
+
+/* =====================================================================
+   EXAM
+   ===================================================================== */
+function setupExam(r) {
+  const st = S.state;
+  S.finishing = false; S.violations = st.violations || 0;
+  if (S.mode === 'exam') {
+    S.round = 0; S.qids = rcExamIds(st.key); S.startEpoch = st.startEpoch; S.limitMin = S.settings.timeLimitMin;
+    S.storeKey = 'rcp_ans_' + st.key + '_main';
+    $('#exMode').textContent = '📝 สอบจริง';
+  } else {
+    S.round = r.round; S.qids = rcRetakeIds(st.key, r.round, r.count || S.settings.retakeCount);
+    S.startEpoch = st.retakeStart; S.limitMin = S.settings.retakeTimeLimitMin;
+    S.storeKey = 'rcp_ans_' + st.key + '_r' + r.round;
+    $('#exMode').textContent = '🔁 แก้ตัวครั้งที่ ' + (Math.min(st.retakeDone, st.retakeRequired) + 1) + '/' + st.retakeRequired;
+  }
+  let saved = {};
+  try { saved = JSON.parse(lsGet(S.storeKey) || '{}') || {}; } catch (e) { saved = {}; }
+  S.answers = rcCleanAnswers(Object.assign({}, S.mode === 'exam' ? (st.answers || {}) : {}, saved), S.qids);
+  S.optOrder = {};
+  S.qids.forEach(id => { S.optOrder[id] = rcShuffle([0, 1, 2, 3], rcRng(st.key + '|' + id + '|' + S.mode + S.round)); });
+  const firstUn = S.qids.findIndex(id => S.answers[id] === undefined);
+  S.idx = firstUn < 0 ? 0 : firstUn;
+  renderPassage(); buildGrid(); renderQ(); updateVPill();
+  show('exam'); S.inExam = true;
+  startTimer();
+  if (S.settings.antiCheat) AC.enable();
+}
+function renderPassage() {
+  $('#passageBody').innerHTML = PASSAGE.map((p, i) => '<p><b>¶' + (i + 1) + '</b>' + esc(p) + '</p>').join('');
+}
+let pfs = Number(lsGet('rcp_pfs')) || 16.5;
+function setPfs(v) { pfs = Math.max(13, Math.min(24, v)); $('#passage').style.setProperty('--pfs', pfs + 'px'); lsSet('rcp_pfs', pfs); }
+setPfs(pfs);
+$('#fsMinus').onclick = () => setPfs(pfs - 1.5);
+$('#fsPlus').onclick = () => setPfs(pfs + 1.5);
+$('#passOpen').onclick = () => $('#passage').classList.add('open');
+$('#passClose').onclick = () => $('#passage').classList.remove('open');
+
+function buildGrid() {
+  const g = $('#gridNav'); g.innerHTML = '';
+  S.qids.forEach((id, i) => {
+    const b = document.createElement('button'); b.textContent = i + 1;
+    b.onclick = () => { S.idx = i; renderQ(); };
+    g.appendChild(b);
+  });
+}
+function updateNav() {
+  const btns = $('#gridNav').children;
+  let n = 0;
+  S.qids.forEach((id, i) => { const a = S.answers[id] !== undefined; if (a) n++; btns[i].className = (a ? 'ans' : '') + (i === S.idx ? ' cur' : ''); });
+  $('#ansCount').textContent = 'ตอบแล้ว ' + n + '/' + S.qids.length;
+  $('#progBar').style.width = (n / S.qids.length * 100) + '%';
+  $('#prevBtn').disabled = S.idx === 0;
+  $('#nextBtn').textContent = S.idx === S.qids.length - 1 ? 'ส่งคำตอบ 📨' : 'ข้อถัดไป ➜';
+}
+function renderQ() {
+  const id = S.qids[S.idx], q = QMAP[id];
+  $('#qNum').textContent = 'ข้อ ' + (S.idx + 1) + ' / ' + S.qids.length;
+  const d = $('#qDiff'); d.className = 'diff ' + q.d; d.textContent = DIFF_TH[q.d];
+  $('#qText').textContent = q.q;
+  const box = $('#opts'); box.innerHTML = '';
+  S.optOrder[id].forEach((orig, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt' + (S.answers[id] === orig ? ' sel' : '');
+    b.dataset.orig = orig;
+    b.innerHTML = '<span class="l">' + 'ABCD'[i] + '</span><span class="t"></span>';
+    b.querySelector('.t').textContent = q.o[orig];
+    b.onclick = () => choose(id, orig);
+    box.appendChild(b);
+  });
+  const c = $('#qcard'); c.classList.remove('enter'); void c.offsetWidth; c.classList.add('enter');
+  updateNav();
+}
+function choose(id, orig) {
+  if (S.finishing) return;
+  const wasNew = S.answers[id] === undefined;
+  S.answers[id] = orig;
+  SFX.tap();
+  document.querySelectorAll('#opts .opt').forEach(b => { const on = Number(b.dataset.orig) === orig; b.classList.toggle('sel', on); if (on) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } });
+  lsSet(S.storeKey, JSON.stringify(S.answers));
+  updateNav();
+  queueSave();
+  if (wasNew && S.idx < S.qids.length - 1) setTimeout(() => { if (S.qids[S.idx] === id && !S.finishing) { S.idx++; renderQ(); } }, 420);
+}
+function queueSave() {
+  if (S.mode !== 'exam') return;
+  clearTimeout(S.saveTimer);
+  S.saveTimer = setTimeout(() => { api('save', { key: S.state.key, deviceId: DEVICE_ID, answers: S.answers }); }, 2500);
+}
+$('#prevBtn').onclick = () => { if (S.idx > 0) { S.idx--; renderQ(); } };
+$('#nextBtn').onclick = () => { if (S.idx < S.qids.length - 1) { S.idx++; renderQ(); } else askSubmit(); };
+$('#submitBtn').onclick = () => askSubmit();
+
+async function askSubmit() {
+  const un = []; S.qids.forEach((id, i) => { if (S.answers[id] === undefined) un.push(i + 1); });
+  const html = un.length
+    ? 'ยังไม่ได้ตอบ <b style="color:#ff9dbb">' + un.length + ' ข้อ</b><br><small>ข้อ ' + un.join(', ') + '</small><br><br>ส่งเลยหรือไม่? (ข้อที่ไม่ตอบ = 0 คะแนน)'
+    : 'ตอบครบทุกข้อแล้ว 👍<br>เมื่อส่งแล้วจะ<b>แก้ไขไม่ได้</b>';
+  const ok = await modal({ icon: '📨', title: 'ยืนยันการส่งคำตอบ', html: html, buttons: [{ text: 'กลับไปตรวจ', value: false, cls: 'ghost' }, { text: 'ส่งคำตอบ', value: true, cls: 'rose' }] });
+  if (ok) finalize('manual');
+}
+
+/* ---------------- timer ---------------- */
+function startTimer() {
+  clearInterval(S.timerId);
+  const tick = () => {
+    const el = $('#timer');
+    const elapsed = nowServer() - S.startEpoch;
+    if (!S.limitMin) { const s = Math.max(0, Math.floor(elapsed / 1000)); el.textContent = '⏱ ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); el.classList.remove('warn'); return; }
+    const left = Math.max(0, S.limitMin * 60000 - elapsed), s = Math.ceil(left / 1000);
+    el.textContent = '⏳ ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+    el.classList.toggle('warn', s <= 300);
+    if (left <= 0 && !S.finishing) finalize('timeout');
+  };
+  tick(); S.timerId = setInterval(tick, 1000);
+}
+
+/* ---------------- finalize ---------------- */
+async function finalize(reason) {
+  if (S.finishing) return;
+  S.finishing = true;
+  clearInterval(S.timerId); clearTimeout(S.saveTimer); AC.disable();
+  $('#modal').classList.remove('open'); $('#warn').classList.remove('open');
+  if (modalResolve) { const r0 = modalResolve; modalResolve = null; r0(null); }
+  if (reason === 'timeout') toast('⏰ หมดเวลา! ระบบส่งคำตอบให้อัตโนมัติ', 'err');
+  if (reason === 'violation') toast('🚨 ทุจริตครบกำหนด ระบบส่งคำตอบอัตโนมัติ', 'err');
+  for (;;) {
+    busy(true, 'กำลังส่งคำตอบและตรวจคะแนน…');
+    const r = S.mode === 'exam'
+      ? await api('finish', { key: S.state.key, deviceId: DEVICE_ID, answers: S.answers }, { retries: 3 })
+      : await api('retakeFinish', { key: S.state.key, deviceId: DEVICE_ID, round: S.round, answers: S.answers }, { retries: 3 });
+    busy(false);
+    if (r.ok) {
+      lsDel(S.storeKey); S.inExam = false;
+      applyState(r.state);
+      if (S.mode === 'exam') showResult({ kind: 'exam', fresh: true });
+      else showResult({ kind: 'retake', fresh: true, round: r.state.retakeScores.length, roundScore: r.roundScore, roundTotal: r.roundTotal, counted: r.counted, code: r.roundCode, at: r.state.serverNow });
+      return;
+    }
+    if (r.error === 'round_mismatch' || r.error === 'not_started') {
+      lsDel(S.storeKey); S.inExam = false; if (r.state) applyState(r.state);
+      await modal({ icon: '⚠️', title: 'ส่งไม่ได้', html: errText(r) }); renderHome(); show('home'); return;
+    }
+    await modal({ icon: '📶', title: 'ยังส่งไม่สำเร็จ', html: errText(r) + '<br><br>คำตอบยังถูกเก็บไว้ในเครื่อง ไม่หายแน่นอน ✅', buttons: [{ text: 'ส่งอีกครั้ง', value: 1 }] });
+  }
+}
+
+/* ---------------- result ---------------- */
+let lastResult = null;
+function showResult(o) {
+  const st = S.state; lastResult = o;
+  let score, total, passed, badge, msg;
+  if (o.kind === 'exam') {
+    score = st.score; total = st.total; passed = st.passed;
+    badge = '📝 ผลสอบจริง';
+    msg = passed ? 'ยอดเยี่ยม! เธอสอบผ่านแล้ว 🎉' : 'ยังไม่ผ่าน ขาดอีก ' + st.retakeRequired + ' คะแนน → สอบแก้ตัว ' + st.retakeRequired + ' ครั้ง 💪';
+  } else {
+    score = o.roundScore; total = o.roundTotal; passed = o.counted;
+    badge = '🔁 สอบแก้ตัว ครั้งที่ ' + o.round;
+    msg = (o.counted ? 'รอบนี้นับแล้ว ✅' : 'รอบนี้ไม่นับ ❌ (ต้องได้อย่างน้อย ' + S.settings.retakeMinScore + ' คะแนน)') + ' · แก้ตัวสำเร็จ ' + Math.min(st.retakeDone, st.retakeRequired) + '/' + st.retakeRequired + ' ครั้ง' + (st.retakeComplete ? ' 🎉 ครบแล้ว!' : '');
+  }
+  $('#resBadge').textContent = badge;
+  $('#resMsg').textContent = msg;
+  $('#resTotal').textContent = '/ ' + total;
+  const stamp = $('#resStamp');
+  stamp.className = 'stamp ' + (passed ? 'pass' : 'fail');
+  stamp.textContent = o.kind === 'exam' ? (passed ? 'PASS' : 'NOT YET') : (o.counted ? 'COUNTED' : 'NOT COUNTED');
+  const photo = lsGet('rcp_photo_' + st.key) || '';
+  const rows = [
+    ['ชั้น / เลขที่', clsLabel(st.cls) + ' / ' + st.no],
+    ['คะแนน', score + ' / ' + total],
+    o.kind === 'exam' ? ['คะแนนผ่าน', st.passScore + ' / ' + RC_TOTAL] : ['แก้ตัวสำเร็จ', Math.min(st.retakeDone, st.retakeRequired) + ' / ' + st.retakeRequired + ' ครั้ง'],
+    o.kind === 'exam' ? ['ต้องสอบแก้ตัว', passed ? '— ไม่ต้อง —' : (Math.min(st.retakeDone, st.retakeRequired) + ' / ' + st.retakeRequired + ' ครั้ง')] : ['ผลรอบนี้', o.counted ? 'นับ ✅' : 'ไม่นับ ❌'],
+    ['เวลา', thTime(o.kind === 'exam' ? st.finishEpoch : (o.at || Date.now()))],
+    ['ทุจริตที่ตรวจพบ', (st.violations || 0) + ' ครั้ง']
+  ];
+  const code = o.kind === 'exam' ? st.code : (o.code || '');
+  $('#capCard').innerHTML =
+    '<div class="cap-head">' + (photo ? '<img alt="" src="' + photo + '">' : '<div class="avatar" style="width:74px;height:74px;font-size:30px">' + esc(initial(st.first)) + '</div>') +
+    '<div><small class="muted">Basic English Course · What Does "Professional" Mean?</small><div style="font-size:22px;font-weight:900">' + esc(st.first + ' ' + st.last) + '</div><span class="chip" style="margin-top:6px">' + esc(badge) + '</span></div></div>' +
+    '<div class="cap-grid">' + rows.map(r => '<div><small>' + esc(r[0]) + '</small><b>' + esc(r[1]) + '</b></div>').join('') + '</div>' +
+    '<div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span class="muted" style="font-size:13px">รหัสยืนยันผล (ครูใช้ตรวจสอบ)</span><b class="code" style="font-size:22px">' + esc(code || '—') + '</b></div>';
+  const rb = $('#resRetakeBtn');
+  rb.style.display = (st.status === 'done' && !st.passed && !st.retakeComplete) ? '' : 'none';
+  rb.textContent = '🔁 สอบแก้ตัว ครั้งที่ ' + (Math.min(st.retakeDone, st.retakeRequired) + 1);
+  show('result');
+  const arc = $('#ringArc'), num = $('#resScore');
+  arc.style.strokeDashoffset = 326.7;
+  setTimeout(() => { arc.style.strokeDashoffset = 326.7 * (1 - (total ? score / total : 0)); }, 60);
+  const t0 = performance.now();
+  (function cnt(t) { const k = Math.min(1, (t - t0) / 1500); num.textContent = Math.round(score * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(cnt); })(t0);
+  if (o.fresh) { setTimeout(() => { if (passed || (o.kind === 'retake' && S.state.retakeComplete)) { confetti(); SFX.ok(); } else SFX.bad(); }, 900); }
+  else if (passed) setTimeout(() => confetti(2200), 900);
+}
+$('#resHomeBtn').onclick = () => { renderHome(); show('home'); };
+$('#resRetakeBtn').onclick = () => openRules('retake');
+$('#saveImgBtn').onclick = () => saveImage();
+
+async function saveImage() {
+  const st = S.state, o = lastResult || { kind: 'exam' };
+  const c = document.createElement('canvas'); c.width = 1080; c.height = 1350;
+  const x = c.getContext && c.getContext('2d');
+  if (!x) { toast('อุปกรณ์นี้สร้างรูปไม่ได้ กรุณาแคปหน้าจอแทน 📸', 'err'); return; }
+  const F = (w, s) => w + ' ' + s + 'px system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Leelawadee UI",Thonburi,sans-serif';
+  const g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, '#0b1240'); g.addColorStop(.55, '#11205c'); g.addColorStop(1, '#0a3a3a');
+  x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+  [['rgba(124,92,255,.35)', 180, 180, 360], ['rgba(46,230,166,.25)', 940, 260, 320], ['rgba(76,201,255,.22)', 760, 1220, 420]].forEach(b => { const rg = x.createRadialGradient(b[1], b[2], 0, b[1], b[2], b[3]); rg.addColorStop(0, b[0]); rg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = rg; x.fillRect(0, 0, 1080, 1350); });
+  x.textAlign = 'center'; x.fillStyle = '#2ee6a6'; x.font = F(800, 30); x.fillText('BASIC ENGLISH COURSE · READING · ม.6', 540, 100);
+  x.fillStyle = '#fff'; x.font = F(900, 54); x.fillText('What Does "Professional" Mean?', 540, 170);
+  const photo = lsGet('rcp_photo_' + st.key);
+  if (photo) {
+    await new Promise(res => { const im = new Image(); im.onload = () => { x.save(); x.beginPath(); x.arc(540, 330, 110, 0, 6.283); x.clip(); x.drawImage(im, 430, 220, 220, 220); x.restore(); res(); }; im.onerror = res; im.src = photo; });
+    x.strokeStyle = '#2ee6a6'; x.lineWidth = 8; x.beginPath(); x.arc(540, 330, 114, 0, 6.283); x.stroke();
+  } else { x.fillStyle = '#7c5cff'; x.beginPath(); x.arc(540, 330, 110, 0, 6.283); x.fill(); x.fillStyle = '#fff'; x.font = F(900, 100); x.fillText(initial(st.first), 540, 365); }
+  x.fillStyle = '#fff'; x.font = F(900, 56); x.fillText(st.first + ' ' + st.last, 540, 520);
+  x.fillStyle = '#a7b2da'; x.font = F(700, 34); x.fillText(clsLabel(st.cls) + '  ·  เลขที่ ' + st.no, 540, 572);
+  let score, total, label, good;
+  if (o.kind === 'exam') { score = st.score; total = st.total; good = st.passed; label = good ? 'ผ่าน ✔' : 'ยังไม่ผ่าน'; }
+  else { score = o.roundScore; total = o.roundTotal; good = o.counted; label = 'แก้ตัวครั้งที่ ' + o.round + (good ? ' · นับ ✔' : ' · ไม่นับ'); }
+  x.fillStyle = 'rgba(0,0,0,.28)'; x.beginPath(); x.roundRect ? x.roundRect(140, 620, 800, 300, 40) : x.rect(140, 620, 800, 300); x.fill();
+  x.font = F(900, 170); const w1 = x.measureText(String(score)).width; x.font = F(800, 70); const w2 = x.measureText(' / ' + total).width;
+  const sx = 540 - (w1 + w2) / 2; x.textAlign = 'left';
+  x.fillStyle = good ? '#2ee6a6' : '#ff5d8f'; x.font = F(900, 170); x.fillText(String(score), sx, 820);
+  x.fillStyle = '#a7b2da'; x.font = F(800, 70); x.fillText(' / ' + total, sx + w1, 820); x.textAlign = 'center';
+  x.fillStyle = good ? '#2ee6a6' : '#ff9dbb'; x.font = F(900, 44); x.fillText(label, 540, 890);
+  x.font = F(700, 32); x.fillStyle = '#e6ebff';
+  const lines = o.kind === 'exam'
+    ? ['คะแนนผ่าน ' + st.passScore + '/' + RC_TOTAL + (good ? '' : '  ·  ต้องสอบแก้ตัว ' + st.retakeRequired + ' ครั้ง (ทำแล้ว ' + Math.min(st.retakeDone, st.retakeRequired) + ')'), 'ส่งเมื่อ ' + thTime(st.finishEpoch)]
+    : ['สอบแก้ตัวสำเร็จ ' + Math.min(st.retakeDone, st.retakeRequired) + ' / ' + st.retakeRequired + ' ครั้ง' + (st.retakeComplete ? '  🎉 ครบแล้ว' : ''), 'ส่งเมื่อ ' + thTime(o.at || Date.now())];
+  lines.push('ทุจริตที่ตรวจพบ ' + (st.violations || 0) + ' ครั้ง');
+  lines.forEach((l, i) => x.fillText(l, 540, 1000 + i * 52));
+  const code = o.kind === 'exam' ? st.code : o.code;
+  x.fillStyle = '#ffd166'; x.font = F(900, 46); x.fillText('รหัสยืนยัน  ' + (code || '-'), 540, 1205);
+  x.fillStyle = '#6f7aa6'; x.font = F(700, 26); x.fillText('By T.OAT · Thanakhan-Oomsin School', 540, 1290);
+  let url;
+  try { url = c.toDataURL('image/png'); } catch (e) { toast('สร้างรูปไม่ได้ กรุณาแคปหน้าจอแทน 📸', 'err'); return; }
+  const fname = 'ผลสอบ_' + st.cls.replace('/', '-') + '_' + st.no + '_' + (o.kind === 'exam' ? 'สอบจริง' : 'แก้ตัว' + o.round) + '.png';
+  await modal({ icon: '🖼️', title: 'รูปผลสอบพร้อมแล้ว', html: '<img src="' + url + '" alt="ผลสอบ" style="width:100%;border-radius:16px;margin:6px 0 10px"><a class="btn vio" style="display:inline-block;text-decoration:none" href="' + url + '" download="' + esc(fname) + '">⬇ ดาวน์โหลดรูป</a><p class="muted" style="font-size:13px">📱 iPad: กดค้างที่รูป → “บันทึกลงในรูปภาพ”</p>', buttons: [{ text: 'ปิด', value: true, cls: 'ghost' }] });
+}
+
+/* =====================================================================
+   ANTI-CHEAT
+   ===================================================================== */
+const AC = {
+  on: false, last: 0, mo: null, mo2: null,
+  enable() {
+    if (this.on) return;
+    this.on = true;
+    document.addEventListener('visibilitychange', acVis);
+    window.addEventListener('blur', acBlur);
+    window.addEventListener('pagehide', acHide);
+    ['copy', 'cut', 'paste', 'contextmenu', 'selectstart', 'dragstart'].forEach(ev => document.addEventListener(ev, acBlock, true));
+    document.addEventListener('keydown', acKey, true);
+    try {
+      this.mo = new MutationObserver(ms => { for (const m of ms) if (m.type === 'characterData') { AC.flag('translate'); break; } });
+      this.mo.observe($('#examRoot'), { characterData: true, subtree: true });
+      this.mo2 = new MutationObserver(() => { const c = document.documentElement.className || ''; if (/translated/.test(c)) AC.flag('translate'); });
+      this.mo2.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'lang'] });
+    } catch (e) { }
+  },
+  disable() {
+    if (!this.on) return;
+    this.on = false;
+    document.removeEventListener('visibilitychange', acVis);
+    window.removeEventListener('blur', acBlur);
+    window.removeEventListener('pagehide', acHide);
+    ['copy', 'cut', 'paste', 'contextmenu', 'selectstart', 'dragstart'].forEach(ev => document.removeEventListener(ev, acBlock, true));
+    document.removeEventListener('keydown', acKey, true);
+    try { this.mo && this.mo.disconnect(); this.mo2 && this.mo2.disconnect(); } catch (e) { }
+  },
+  flag(kind) {
+    if (!this.on || S.finishing) return;
+    const t = Date.now();
+    if (t - this.last < 1500) return;
+    this.last = t;
+    S.violations++;
+    updateVPill();
+    api('violation', { key: S.state.key, deviceId: DEVICE_ID, kind: kind, mode: S.mode === 'exam' ? 'exam' : 'R' + S.round });
+    const max = S.settings.maxViolations;
+    if (max && S.violations >= max) { finalize('violation'); return; }
+    const TXT = { tab: 'ออกจากหน้าข้อสอบ / สลับแท็บหรือแอป', blur: 'หน้าต่างข้อสอบไม่ได้อยู่ด้านหน้า', copy: 'พยายามคัดลอก / วาง / คลิกขวา', shortcut: 'กดปุ่มลัดที่ไม่อนุญาต', translate: 'ใช้ตัวแปลภาษา', screenshot: 'กดปุ่มจับภาพหน้าจอ' };
+    $('#warnText').innerHTML = '<b>' + (TXT[kind] || kind) + '</b><br>บันทึกส่งครูโอ๊ตแล้ว (ครั้งที่ ' + S.violations + (max ? '/' + max : '') + ')<br><small class="muted">ทำซ้ำอีกอาจถูกพิจารณาว่าทุจริต</small>';
+    $('#warn').classList.add('open'); SFX.warn();
+  }
+};
+function acVis() { if (document.visibilityState === 'hidden') AC.flag('tab'); }
+function acBlur() { setTimeout(() => { if (AC.on && !document.hasFocus() && document.visibilityState === 'visible') AC.flag('blur'); }, 300); }
+function acHide() { AC.flag('tab'); }
+function acBlock(e) { if (e.target && e.target.closest && e.target.closest('input,select,textarea')) return; e.preventDefault(); if (e.type === 'copy' || e.type === 'cut' || e.type === 'paste' || e.type === 'contextmenu') AC.flag('copy'); }
+function acKey(e) {
+  const k = (e.key || '').toLowerCase();
+  if (k === 'printscreen') { AC.flag('screenshot'); return; }
+  if (k === 'f12' || ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === 'i' || k === 'j' || k === 'c'))) { e.preventDefault(); AC.flag('shortcut'); return; }
+  if ((e.ctrlKey || e.metaKey) && ['c', 'x', 'v', 'a', 'p', 's', 'u', 'f'].indexOf(k) >= 0) { e.preventDefault(); AC.flag(k === 'c' || k === 'x' || k === 'v' ? 'copy' : 'shortcut'); }
+}
+function updateVPill() { const p = $('#vPill'); p.textContent = '⚠️ ' + S.violations; p.classList.toggle('show', S.violations > 0); }
+$('#warnOk').onclick = () => $('#warn').classList.remove('open');
+window.addEventListener('beforeunload', e => { if (S.inExam && !S.finishing) { e.preventDefault(); e.returnValue = ''; } });
+
+/* =====================================================================
+   FACE SCAN
+   ===================================================================== */
+const FaceScan = {
+  stream: null, timer: null, resolve: null, ok: 0, detector: null, t0: 0, done: false,
+  run() {
+    return new Promise(res => { this.resolve = res; this.open(); });
+  },
+  async open() {
+    this.done = false; this.ok = 0; this.t0 = Date.now();
+    $('#scan').classList.add('open'); $('#cam').classList.remove('ok');
+    $('#scanRetry').style.display = 'none'; $('#scanManual').style.display = 'none';
+    $('#scanMeter').style.width = '0%'; this.status('กำลังเปิดกล้อง… 📷');
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw { name: 'NotSupported' };
+      this.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }, audio: false });
+      const v = $('#camVideo'); v.srcObject = this.stream;
+      try { await v.play(); } catch (e) { }
+      this.detector = null;
+      if ('FaceDetector' in window) { try { this.detector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 3 }); } catch (e) { this.detector = null; } }
+      this.status('มองตรงไปที่กล้อง 🙂');
+      this.loop();
+    } catch (e) {
+      const n = e && e.name;
+      this.status(n === 'NotAllowedError' || n === 'SecurityError' ? '❌ ไม่ได้รับอนุญาตให้ใช้กล้อง — กดไอคอนกล้องที่แถบที่อยู่ แล้วเลือก “อนุญาต” จากนั้นกดลองใหม่'
+        : n === 'NotFoundError' ? '❌ ไม่พบกล้องในอุปกรณ์นี้ กรุณาแจ้งครูโอ๊ต'
+          : n === 'NotSupported' ? '❌ เบราว์เซอร์นี้เปิดกล้องไม่ได้ (ต้องเปิดผ่าน https) กรุณาแจ้งครูโอ๊ต'
+            : '❌ เปิดกล้องไม่ได้ (' + esc(n || e) + ') ลองปิดแอปอื่นที่ใช้กล้องแล้วกดลองใหม่');
+      $('#scanRetry').style.display = '';
+    }
+  },
+  status(t) { $('#scanStatus').innerHTML = t; },
+  async loop() {
+    if (!this.stream || this.done) return;
+    const v = $('#camVideo');
+    if (v.readyState >= 2 && v.videoWidth) {
+      let found = false, msg = '';
+      const c = this.small || (this.small = document.createElement('canvas'));
+      c.width = 96; c.height = 72;
+      const x = c.getContext('2d', { willReadFrequently: true });
+      x.drawImage(v, 0, 0, 96, 72);
+      const img = x.getImageData(0, 0, 96, 72);
+      const h = faceHeuristic(img.data, 96, 72);
+      if (h.dark) msg = '💡 ภาพมืดเกินไป ไปที่ที่มีแสงสว่าง';
+      else if (h.flat) msg = '🙈 กล้องถูกบัง / มองไม่เห็นภาพ';
+      if (this.detector && !h.dark && !h.flat) {
+        try {
+          const faces = await this.detector.detect(v);
+          if (faces.length === 1) found = true;
+          else if (faces.length > 1) msg = '👥 พบมากกว่า 1 คน — ให้มีแค่ตัวเองในกล้อง';
+          else msg = '🔍 ยังไม่พบใบหน้า จัดหน้าให้อยู่ในวงรี';
+        } catch (e) { this.detector = null; }
+      }
+      if (!this.detector && !h.dark && !h.flat) { found = h.face; if (!found) msg = '🔍 ยังไม่พบใบหน้า จัดหน้าให้อยู่ในวงรี'; }
+      if (found) { this.ok++; this.status('✅ พบใบหน้า… อยู่นิ่ง ๆ'); } else { this.ok = Math.max(0, this.ok - 2); this.status(msg); }
+      $('#cam').classList.toggle('ok', found);
+      $('#scanMeter').style.width = Math.min(100, this.ok / 8 * 100) + '%';
+      if (Date.now() - this.t0 > 20000) $('#scanManual').style.display = '';
+      if (this.ok >= 8) { this.capture(); return; }
+    }
+    this.timer = setTimeout(() => this.loop(), 170);
+  },
+  capture() {
+    if (this.done) return;
+    const v = $('#camVideo');
+    if (!v.videoWidth) { toast('กล้องยังไม่พร้อม ลองอีกครั้ง', 'err'); return; }
+    this.done = true; clearTimeout(this.timer);
+    const c = document.createElement('canvas'); c.width = 240; c.height = 300;
+    const x = c.getContext('2d');
+    const vw = v.videoWidth, vh = v.videoHeight, r = 240 / 300;
+    let sw = vh * r, sh = vh; if (sw > vw) { sw = vw; sh = vw / r; }
+    x.translate(240, 0); x.scale(-1, 1);
+    x.drawImage(v, (vw - sw) / 2, (vh - sh) / 2, sw, sh, 0, 0, 240, 300);
+    let data = c.toDataURL('image/jpeg', 0.62);
+    if (data.length > 45000) data = c.toDataURL('image/jpeg', 0.4);
+    const f = $('#camFlash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
+    SFX.ok(); this.status('✅ ยืนยันตัวตนสำเร็จ!'); $('#scanMeter').style.width = '100%';
+    setTimeout(() => { this.close(); const r2 = this.resolve; this.resolve = null; if (r2) r2(data); }, 900);
+  },
+  close() {
+    clearTimeout(this.timer);
+    if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; }
+    $('#camVideo').srcObject = null;
+    $('#scan').classList.remove('open');
+  },
+  cancel() { this.done = true; this.close(); const r = this.resolve; this.resolve = null; if (r) r(''); }
+};
+// Skin-tone (YCbCr) + brightness/contrast check inside the face oval — fallback when FaceDetector API is unavailable
+function faceHeuristic(d, w, h) {
+  let n = 0, skin = 0, sum = 0, sum2 = 0;
+  const cx = w / 2, cy = h * 0.47, rx = w * 0.3, ry = h * 0.36;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = (y * w + x) * 4, R = d[i], G = d[i + 1], B = d[i + 2];
+    const Y = 0.299 * R + 0.587 * G + 0.114 * B;
+    sum += Y; sum2 += Y * Y;
+    const dx = (x - cx) / rx, dy = (y - cy) / ry;
+    if (dx * dx + dy * dy <= 1) {
+      n++;
+      const Cb = 128 - 0.168736 * R - 0.331264 * G + 0.5 * B, Cr = 128 + 0.5 * R - 0.418688 * G - 0.081312 * B;
+      if (Cr >= 133 && Cr <= 178 && Cb >= 75 && Cb <= 130 && Y > 35) skin++;
+    }
+  }
+  const N = w * h, mean = sum / N, sd = Math.sqrt(Math.max(0, sum2 / N - mean * mean));
+  const ratio = n ? skin / n : 0;
+  return { dark: mean < 38, flat: sd < 12, ratio: ratio, face: mean >= 38 && sd >= 12 && ratio > 0.22 && ratio < 0.97 };
+}
+$('#scanCancel').onclick = () => FaceScan.cancel();
+$('#scanRetry').onclick = () => { FaceScan.close(); FaceScan.open(); };
+$('#scanManual').onclick = () => FaceScan.capture();
+
+/* =====================================================================
+   ADMIN
+   ===================================================================== */
+const ADM = { pin: '', rows: [], timer: null, settingsLoaded: false, prevV: {} };
+function openAdmin() {
+  show('admin');
+  const saved = (function () { try { return sessionStorage.getItem('rcp_pin'); } catch (e) { return null; } })();
+  if (saved) { $('#pinIn').value = saved; admLogin(); }
+  else { $('#admGate').style.display = ''; $('#admMain').style.display = 'none'; setTimeout(() => $('#pinIn').focus(), 300); }
+}
+$('#toAdmin').onclick = openAdmin;
+$('#admBack').onclick = () => { buildLogin(); show('login'); };
+$('#pinGo').onclick = admLogin;
+$('#pinIn').addEventListener('keydown', e => { if (e.key === 'Enter') admLogin(); });
+async function admLogin() {
+  const pin = $('#pinIn').value.trim();
+  if (!pin) return;
+  busy(true, 'กำลังตรวจสอบ…');
+  const r = await api('adminCheck', { pin: pin }, { retries: 1 });
+  busy(false);
+  if (!r.ok) { SFX.bad(); toast(r.error === 'bad_pin' ? '❌ PIN ไม่ถูกต้อง' : errText(r).replace(/<[^>]+>/g, ''), 'err'); try { sessionStorage.removeItem('rcp_pin'); } catch (e) { } $('#admGate').style.display = ''; $('#admMain').style.display = 'none'; return; }
+  ADM.pin = pin; try { sessionStorage.setItem('rcp_pin', pin); } catch (e) { }
+  $('#admGate').style.display = 'none'; $('#admMain').style.display = '';
+  ADM.settingsLoaded = false;
+  await admLoad();
+  clearInterval(ADM.timer);
+  ADM.timer = setInterval(() => { if (!document.hidden && $('#sc-admin').classList.contains('active') && ADM.pin) admLoad(); }, 4000);
+}
+$('#admOut').onclick = () => { ADM.pin = ''; clearInterval(ADM.timer); try { sessionStorage.removeItem('rcp_pin'); } catch (e) { } $('#pinIn').value = ''; buildLogin(); show('login'); };
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+  $('#tabLive').style.display = t.dataset.tab === 'live' ? '' : 'none';
+  $('#tabSet').style.display = t.dataset.tab === 'set' ? '' : 'none';
+});
+let admLoading = false;
+async function admLoad() {
+  if (admLoading) return;
+  admLoading = true;
+  const r = await api('adminList', { pin: ADM.pin });
+  admLoading = false;
+  if (!r.ok) { if (r.error === 'bad_pin') { toast('PIN ถูกเปลี่ยน กรุณาเข้าใหม่', 'err'); $('#admOut').click(); } return; }
+  ADM.rows = r.rows || [];
+  const fc = $('#fCls'), cur = fc.value;
+  const classes = Array.from(new Set(ADM.rows.map(x => x.cls))).sort();
+  if (fc.options.length - 1 !== classes.length) fc.innerHTML = '<option value="">ทุกห้อง</option>' + classes.map(c => '<option value="' + esc(c) + '">' + clsLabel(c) + '</option>').join('');
+  fc.value = cur;
+  if (!ADM.settingsLoaded) { renderSettings(r.settings); ADM.settingsLoaded = true; }
+  renderAdmin();
+}
+['#fCls', '#fSt'].forEach(s => $(s).addEventListener('change', renderAdmin));
+$('#fQ').addEventListener('input', renderAdmin);
+
+function admStatus(x) {
+  if (x.status === 'done') return '<span class="st done">✔ ส่งแล้ว</span>';
+  if (x.status === 'in_progress') return '<span class="st prog">✍️ กำลังสอบ ' + x.answered + '/' + x.total + '</span>';
+  if (x.deviceBound) return '<span class="st bound">🔗 เข้าระบบแล้ว</span>';
+  return '<span class="st none">ยังไม่เข้า</span>';
+}
+function renderAdmin() {
+  const rows = ADM.rows;
+  const done = rows.filter(x => x.status === 'done'), pass = done.filter(x => x.passed), fail = done.filter(x => !x.passed);
+  const avg = done.length ? (done.reduce((a, b) => a + b.score, 0) / done.length).toFixed(1) : '-';
+  const stats = [['👥', rows.length, 'นักเรียนทั้งหมด'], ['✍️', rows.filter(x => x.status === 'in_progress').length, 'กำลังสอบ'], ['📨', done.length, 'ส่งแล้ว'], ['✅', pass.length, 'ผ่าน'], ['❌', fail.length, 'ไม่ผ่าน'], ['🔁', fail.filter(x => x.retakeComplete).length + '/' + fail.length, 'แก้ตัวครบ'], ['📈', avg, 'คะแนนเฉลี่ย']];
+  $('#stats').innerHTML = stats.map(s => '<div class="stat"><small>' + s[0] + ' ' + s[2] + '</small><b>' + s[1] + '</b></div>').join('');
+  const fc = $('#fCls').value, fs = $('#fSt').value, q = $('#fQ').value.trim().toLowerCase();
+  const list = rows.filter(x => {
+    if (fc && x.cls !== fc) return false;
+    if (q && (x.first + ' ' + x.last + ' ' + x.no).toLowerCase().indexOf(q) < 0) return false;
+    if (fs === 'none' && x.status !== 'none') return false;
+    if (fs === 'prog' && x.status !== 'in_progress') return false;
+    if (fs === 'done' && x.status !== 'done') return false;
+    if (fs === 'pass' && !(x.status === 'done' && x.passed)) return false;
+    if (fs === 'fail' && !(x.status === 'done' && !x.passed)) return false;
+    if (fs === 'rtodo' && !(x.status === 'done' && !x.passed && !x.retakeComplete)) return false;
+    return true;
+  });
+  const fresh = [];
+  list.forEach(x => { const pv = ADM.prevV[x.key]; if (pv !== undefined && x.violations > pv) fresh.push(x); ADM.prevV[x.key] = x.violations; });
+  rows.forEach(x => { if (ADM.prevV[x.key] === undefined) ADM.prevV[x.key] = x.violations; });
+  if (fresh.length) { SFX.warn(); fresh.forEach(x => toast('🚨 ' + x.first + ' (' + clsLabel(x.cls) + ' #' + x.no + ') ทุจริต: ' + ((x.vlog[x.vlog.length - 1] || {}).k || ''), 'err')); }
+  const VK = { tab: 'สลับแท็บ', blur: 'ออกนอกหน้า', copy: 'คัดลอก', shortcut: 'ปุ่มลัด', translate: 'แปลภาษา', screenshot: 'แคปจอ' };
+  $('#tbody').innerHTML = list.map(x => {
+    const rt = x.status === 'done' && !x.passed
+      ? '<b style="color:' + (x.retakeComplete ? 'var(--em)' : 'var(--gold)') + '">' + Math.min(x.retakeDone, x.retakeRequired) + '/' + x.retakeRequired + '</b>' + (x.retakeComplete ? ' 🎉' : '') + '<br><small class="muted">ทำ ' + x.retakeAttempts + ' รอบ' + (x.retakeActive ? ' · กำลังทำ' : '') + (x.retakeScores.length ? ' · ล่าสุด ' + x.retakeScores[x.retakeScores.length - 1].s + '/' + x.retakeScores[x.retakeScores.length - 1].n : '') + '</small>'
+      : '<span class="muted">—</span>';
+    const vl = x.vlog.slice(-4).map(v => (VK[v.k] || v.k)).join(', ');
+    return '<tr class="' + (fresh.indexOf(x) >= 0 ? 'flash' : '') + '"><td>' + clsLabel(x.cls) + '</td><td>' + x.no + '</td><td><b>' + esc(x.first + ' ' + x.last) + '</b>' + (x.deviceBound ? '<br><small class="muted">📱 …' + esc(x.deviceShort) + '</small>' : '') + '</td><td>' + admStatus(x) + '</td><td><b>' + (x.status === 'done' ? x.score + '/' + x.total : '-') + '</b></td><td>' + (x.status === 'done' ? (x.passed ? '<span class="pf p">ผ่าน</span>' : '<span class="pf f">ไม่ผ่าน</span>') : '') + '</td><td>' + rt + '</td><td>' + (x.violations ? '<b style="color:var(--rose)">' + x.violations + '</b><div class="vlog">' + esc(vl) + '</div>' : '0') + '</td><td>' + (x.hasPhoto || x.hasRetakePhoto ? '<button class="thumb" data-ph="' + esc(x.key) + '">📷</button>' : '<span class="muted">—</span>') + '</td><td class="code">' + esc(x.code || '') + '</td><td><div class="act">' + (x.deviceBound ? '<button data-rel="' + esc(x.key) + '">🔓 ปลดล็อกเครื่อง</button>' : '') + (x.status !== 'none' ? '<button data-rst="' + esc(x.key) + '">♻️ รีเซ็ตสอบ</button>' : '') + (x.retakeAttempts ? '<button data-rrt="' + esc(x.key) + '">🧹 ล้างแก้ตัว</button>' : '') + '</div></td></tr>';
+  }).join('') || '<tr><td colspan="11" style="text-align:center;padding:30px" class="muted">ไม่มีข้อมูล (ใส่รายชื่อในชีท Students)</td></tr>';
+}
+$('#tbody').addEventListener('click', async e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const key = b.dataset.rel || b.dataset.rst || b.dataset.rrt || b.dataset.ph;
+  const x = ADM.rows.find(r => r.key === key); if (!x) return;
+  const nm = esc(x.first + ' ' + x.last) + ' (' + clsLabel(x.cls) + ' #' + x.no + ')';
+  if (b.dataset.ph) {
+    busy(true, 'กำลังโหลดภาพ…'); const r = await api('adminPhoto', { pin: ADM.pin, key: key }); busy(false);
+    if (!r.ok) { toast(errText(r).replace(/<[^>]+>/g, ''), 'err'); return; }
+    await modal({ icon: '📷', title: x.first + ' ' + x.last, html: '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">' + (r.photo ? '<figure style="margin:0"><img src="' + r.photo + '" style="width:180px;border-radius:14px"><figcaption class="muted">สอบจริง</figcaption></figure>' : '') + (r.retakePhoto ? '<figure style="margin:0"><img src="' + r.retakePhoto + '" style="width:180px;border-radius:14px"><figcaption class="muted">แก้ตัวล่าสุด</figcaption></figure>' : '') + '</div>' });
+    return;
+  }
+  let action, payload = { pin: ADM.pin, key: key }, q;
+  if (b.dataset.rel) { action = 'adminRelease'; q = 'ปลดล็อกเครื่องของ ' + nm + ' ?<br><small class="muted">นักเรียนจะเข้าจากเครื่องใหม่ได้ (เครื่องแรกที่เข้าจะถูกผูกแทน)</small>'; }
+  else if (b.dataset.rst) { action = 'adminReset'; payload.what = 'all'; q = 'รีเซ็ตการสอบของ ' + nm + ' ?<br><small style="color:#ff9dbb">คะแนน คำตอบ รูป และการสอบแก้ตัวจะถูกลบ — นักเรียนสอบใหม่ได้</small>'; }
+  else { action = 'adminReset'; payload.what = 'retake'; q = 'ล้างประวัติสอบแก้ตัวของ ' + nm + ' ?'; }
+  const ok = await modal({ icon: '⚠️', title: 'ยืนยัน', html: q, buttons: [{ text: 'ยกเลิก', value: false, cls: 'ghost' }, { text: 'ยืนยัน', value: true, cls: 'rose' }] });
+  if (!ok) return;
+  busy(true, 'กำลังบันทึก…'); const r = await api(action, payload, { retries: 1 }); busy(false);
+  if (r.ok) { toast('✅ เรียบร้อย', 'ok'); admLoad(); } else toast(errText(r).replace(/<[^>]+>/g, ''), 'err');
+});
+
+const SET_DEF = [
+  ['passScore', 'num', '🎯 คะแนนผ่าน', 'เต็ม 30 · ขาดกี่คะแนน = สอบแก้ตัวกี่ครั้ง', 0, 30],
+  ['timeLimitMin', 'num', '⏱️ เวลาสอบจริง (นาที)', '0 = ไม่จำกัดเวลา', 0, 300],
+  ['examOpen', 'bool', '🚪 เปิดให้เริ่มสอบจริง', 'ปิด = นักเรียนเข้าสู่ระบบได้แต่ยังเริ่มสอบไม่ได้'],
+  ['antiCheat', 'bool', '🛡️ ป้องกันการทุจริต (Chromebook / iPad)', 'จับการสลับแท็บ/แอป คัดลอก ปุ่มลัด ตัวแปลภาษา'],
+  ['maxViolations', 'num', '🚨 ทุจริตครบกี่ครั้ง ส่งข้อสอบอัตโนมัติ', '0 = แค่บันทึกและเตือน', 0, 99],
+  ['faceScan', 'bool', '📷 สแกนใบหน้าก่อนเข้าสอบ', 'ถ่ายภาพยืนยันตัวตนเก็บไว้ให้ครูตรวจ'],
+  ['retakeOpen', 'bool', '🔁 เปิดให้สอบแก้ตัว', ''],
+  ['retakeCount', 'num', '📄 จำนวนข้อต่อรอบแก้ตัว', 'สุ่มจาก 30 ข้อ (ง่าย/กลาง/ยาก ปนกัน)', 1, 30],
+  ['retakeMinScore', 'num', '✅ คะแนนขั้นต่ำต่อรอบแก้ตัว', '0 = ทำเสร็จก็นับ 1 ครั้ง', 0, 30],
+  ['retakeTimeLimitMin', 'num', '⏱️ เวลาสอบแก้ตัวต่อรอบ (นาที)', '0 = ไม่จำกัดเวลา', 0, 300]
+];
+function renderSettings(s) {
+  $('#setGrid').innerHTML = SET_DEF.map(d => '<div class="set"><h4>' + d[2] + '</h4><p>' + d[3] + '</p>' + (d[1] === 'bool'
+    ? '<label class="switch"><input type="checkbox" data-k="' + d[0] + '"' + (s[d[0]] ? ' checked' : '') + '><span></span></label>'
+    : '<input type="number" inputmode="numeric" data-k="' + d[0] + '" min="' + d[4] + '" max="' + d[5] + '" value="' + s[d[0]] + '">') + '</div>').join('') +
+    '<div class="set wide"><h4>🖼️ รูปตกแต่งหน้าเว็บ</h4><p>วางลิงก์รูป (https://…) — รองรับลิงก์แชร์ Google Drive (ตั้งค่าแชร์เป็น “ทุกคนที่มีลิงก์”) · เว้นว่าง = ใช้รูปเดิม</p>' +
+    '<div class="img-row"><img class="pv" id="heroPv" alt=""><div class="ctl"><input type="url" data-k="heroImage" id="heroUrl" placeholder="https://drive.google.com/file/d/…/view" value="' + esc(s.heroImage || '') + '" autocomplete="off">' +
+    '<div class="btns"><button class="btn small ghost" type="button" id="heroPaste">📋 วางลิงก์</button><button class="btn small ghost" type="button" id="heroTest">👀 ดูตัวอย่าง</button><button class="btn small ghost" type="button" id="heroReset">↩️ ใช้รูปเดิม</button></div><div class="img-msg muted" id="heroMsg"></div></div></div></div>' +
+    '<div class="set"><h4>🔐 เปลี่ยน PIN Admin</h4><p>ตัวเลข 4–8 หลัก · เว้นว่าง = ไม่เปลี่ยน</p><input type="password" inputmode="numeric" data-k="newPin" placeholder="PIN ใหม่" autocomplete="new-password"></div>';
+  heroPreview();
+}
+function heroPreview() {
+  const raw = $('#heroUrl').value.trim(), url = rcImgUrl(raw), pv = $('#heroPv'), msg = $('#heroMsg');
+  if (!raw) { pv.src = HERO_DEFAULT; msg.textContent = 'ใช้รูปเดิม'; msg.style.color = ''; return; }
+  if (!url) { pv.removeAttribute('src'); msg.textContent = '❌ ลิงก์ต้องขึ้นต้นด้วย https://'; msg.style.color = 'var(--rose)'; return; }
+  msg.textContent = 'กำลังโหลดรูป…'; msg.style.color = '';
+  pv.onload = () => { msg.textContent = '✅ รูปใช้ได้ — กด “บันทึกการตั้งค่า” เพื่อใช้งาน'; msg.style.color = 'var(--em)'; };
+  pv.onerror = () => { msg.textContent = '❌ โหลดรูปไม่ได้ ตรวจลิงก์/สิทธิ์การแชร์ (ถ้าบันทึกไว้ หน้าเว็บจะใช้รูปเดิมแทน)'; msg.style.color = 'var(--rose)'; };
+  pv.src = url;
+}
+document.addEventListener('click', async e => {
+  const id = e.target && e.target.id;
+  if (id === 'heroTest') heroPreview();
+  else if (id === 'heroReset') { $('#heroUrl').value = ''; heroPreview(); }
+  else if (id === 'heroPaste') {
+    try { const t = await navigator.clipboard.readText(); if (t) { $('#heroUrl').value = t.trim(); heroPreview(); } else toast('คลิปบอร์ดว่าง', 'err'); }
+    catch (err) { $('#heroUrl').focus(); toast('กดค้างในช่องแล้วเลือก “วาง” ได้เลย', 'err'); }
+  }
+});
+document.addEventListener('change', e => { if (e.target && e.target.id === 'heroUrl') heroPreview(); });
+
+$('#saveSetBtn').onclick = async () => {
+  const o = {};
+  document.querySelectorAll('#setGrid [data-k]').forEach(i => { o[i.dataset.k] = i.type === 'checkbox' ? i.checked : i.value; });
+  if (!o.newPin) delete o.newPin;
+  $('#saveSetBtn').disabled = true; $('#setMsg').textContent = 'กำลังบันทึก…';
+  const r = await api('adminSettings', { pin: ADM.pin, settings: o }, { retries: 1 });
+  $('#saveSetBtn').disabled = false;
+  if (!r.ok) { $('#setMsg').textContent = ''; toast(errText(r).replace(/<[^>]+>/g, ''), 'err'); return; }
+  if (o.newPin) { ADM.pin = o.newPin; try { sessionStorage.setItem('rcp_pin', o.newPin); } catch (e) { } }
+  renderSettings(r.settings); S.settings = r.settings; applyHero(r.settings.heroImage);
+  $('#setMsg').textContent = '✅ บันทึกแล้ว ' + new Date().toLocaleTimeString('th-TH');
+  toast('✅ บันทึกการตั้งค่าแล้ว', 'ok');
+  admLoad();
+};
+$('#csvBtn').onclick = () => {
+  const H = ['ห้อง', 'เลขที่', 'ชื่อ', 'นามสกุล', 'สถานะ', 'คะแนน', 'เต็ม', 'ผล', 'ต้องแก้ตัว', 'แก้ตัวสำเร็จ', 'รอบที่ทำ', 'ทุจริต', 'รหัสยืนยัน', 'เวลาส่ง'];
+  const L = [H].concat(ADM.rows.map(x => [clsLabel(x.cls), x.no, x.first, x.last, x.status === 'done' ? 'ส่งแล้ว' : x.status === 'in_progress' ? 'กำลังสอบ' : (x.deviceBound ? 'เข้าระบบแล้ว' : 'ยังไม่เข้า'), x.status === 'done' ? x.score : '', x.total, x.status === 'done' ? (x.passed ? 'ผ่าน' : 'ไม่ผ่าน') : '', x.retakeRequired, Math.min(x.retakeDone, x.retakeRequired || x.retakeDone), x.retakeAttempts, x.violations, x.code, x.finishEpoch ? thTime(x.finishEpoch) : '']));
+  const csv = '﻿' + L.map(r => r.map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'ผลสอบ_Professional_' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+};
+
+boot();
+</script>
+</body>
+</html>
