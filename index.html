@@ -560,7 +560,7 @@ tr.flash td{animation:rowf 1.4s}
    ถ้าเว้นว่าง = โหมดทดลองในเครื่อง (รายชื่อตัวอย่าง)
    ===================================================================== */
 const CONFIG = {
-  GAS_URL: 'https://script.google.com/macros/s/AKfycbz6C3vf6XKk6XqBFwEDM5cyYP9d0I6Z8V3DuV-TRu-Cc9NPzYg1Pu-XEoqSwrVY6n43OQ/exec',
+  GAS_URL: '',
   ADMIN_PIN_OFFLINE: '7846'
 };
 
@@ -595,7 +595,17 @@ function rcNum(v, d, min, max) {
 // Accepts https image links; turns Google Drive share links into direct image links
 function rcImgUrl(v) {
   var s = String(v === undefined || v === null ? '' : v).trim();
-  if (!s || s.length > 2000 || !/^https:\/\//i.test(s)) return '';
+  if (!s || s.length > 4000) return '';
+  // pasted BBCode / HTML embed (e.g. postimages "Hotlink" codes) → pull out the direct image URL
+  if (!/^https:\/\/\S+$/i.test(s)) {
+    var img = s.match(/https:\/\/[^\s"'<>\[\]]+?\.(?:jpe?g|png|gif|webp)(?:\?[^\s"'<>\[\]]*)?/i);
+    var any = s.match(/https:\/\/[^\s"'<>\[\]]+/i);
+    s = img ? img[0] : (any ? any[0] : '');
+    if (!s) return '';
+  }
+  if (s.length > 2000) return '';
+  // postimages page link (postimg.cc/xxxx) is a web page, not an image
+  if (/^https:\/\/(www\.)?(postimg\.cc|postimages\.org)\//i.test(s)) return '';
   var m = s.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/);
   if (m) return 'https://lh3.googleusercontent.com/d/' + m[1];
   return s;
@@ -1841,8 +1851,8 @@ function renderSettings(s) {
   $('#setGrid').innerHTML = SET_DEF.map(d => '<div class="set"><h4>' + d[2] + '</h4><p>' + d[3] + '</p>' + (d[1] === 'bool'
     ? '<label class="switch"><input type="checkbox" data-k="' + d[0] + '"' + (s[d[0]] ? ' checked' : '') + '><span></span></label>'
     : '<input type="number" inputmode="numeric" data-k="' + d[0] + '" min="' + d[4] + '" max="' + d[5] + '" value="' + s[d[0]] + '">') + '</div>').join('') +
-    '<div class="set wide"><h4>🖼️ รูปตกแต่งหน้าเว็บ</h4><p>วางลิงก์รูป (https://…) — รองรับลิงก์แชร์ Google Drive (ตั้งค่าแชร์เป็น “ทุกคนที่มีลิงก์”) · เว้นว่าง = ใช้รูปเดิม</p>' +
-    '<div class="img-row"><img class="pv" id="heroPv" alt=""><div class="ctl"><input type="url" data-k="heroImage" id="heroUrl" placeholder="https://drive.google.com/file/d/…/view" value="' + esc(s.heroImage || '') + '" autocomplete="off">' +
+    '<div class="set wide"><h4>🖼️ รูปตกแต่งหน้าเว็บ</h4><p>วางลิงก์รูป (https://…) — รองรับ postimages (ใช้ <b>Direct link</b> i.postimg.cc) และ Google Drive (แชร์แบบ “ทุกคนที่มีลิงก์”) · เว้นว่าง = ใช้รูปเดิม</p>' +
+    '<div class="img-row"><img class="pv" id="heroPv" alt=""><div class="ctl"><input type="url" data-k="heroImage" id="heroUrl" placeholder="https://i.postimg.cc/xxxx/photo.jpg" value="' + esc(s.heroImage || '') + '" autocomplete="off">' +
     '<div class="btns"><button class="btn small ghost" type="button" id="heroPaste">📋 วางลิงก์</button><button class="btn small ghost" type="button" id="heroTest">👀 ดูตัวอย่าง</button><button class="btn small ghost" type="button" id="heroReset">↩️ ใช้รูปเดิม</button></div><div class="img-msg muted" id="heroMsg"></div></div></div></div>' +
     '<div class="set"><h4>🔐 เปลี่ยน PIN Admin</h4><p>ตัวเลข 4–8 หลัก · เว้นว่าง = ไม่เปลี่ยน</p><input type="password" inputmode="numeric" data-k="newPin" placeholder="PIN ใหม่" autocomplete="new-password"></div>';
   heroPreview();
@@ -1850,7 +1860,14 @@ function renderSettings(s) {
 function heroPreview() {
   const raw = $('#heroUrl').value.trim(), url = rcImgUrl(raw), pv = $('#heroPv'), msg = $('#heroMsg');
   if (!raw) { pv.src = HERO_DEFAULT; msg.textContent = 'ใช้รูปเดิม'; msg.style.color = ''; return; }
-  if (!url) { pv.removeAttribute('src'); msg.textContent = '❌ ลิงก์ต้องขึ้นต้นด้วย https://'; msg.style.color = 'var(--rose)'; return; }
+  if (!url) {
+    pv.removeAttribute('src'); msg.style.color = 'var(--rose)';
+    msg.innerHTML = /(postimg\.cc|postimages\.org)\//i.test(raw) && !/i\.postimg\.cc/i.test(raw)
+      ? '❌ นี่คือลิงก์ “หน้าเว็บ” ของ postimages — ให้เลือก <b>Direct link</b> (ขึ้นต้นด้วย https://i.postimg.cc/…) แทน'
+      : '❌ ลิงก์ต้องขึ้นต้นด้วย https://';
+    return;
+  }
+  if (url !== raw) $('#heroUrl').value = url;
   msg.textContent = 'กำลังโหลดรูป…'; msg.style.color = '';
   pv.onload = () => { msg.textContent = '✅ รูปใช้ได้ — กด “บันทึกการตั้งค่า” เพื่อใช้งาน'; msg.style.color = 'var(--em)'; };
   pv.onerror = () => { msg.textContent = '❌ โหลดรูปไม่ได้ ตรวจลิงก์/สิทธิ์การแชร์ (ถ้าบันทึกไว้ หน้าเว็บจะใช้รูปเดิมแทน)'; msg.style.color = 'var(--rose)'; };
